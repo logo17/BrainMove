@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/measurementsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_appointments"
+        android:title="@string/measurements_bottom_text" />
+    <item
+        android:id="@+id/trendsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_measurements"
+        android:title="@string/trends_bottom_text" />
+    <item
+        android:id="@+id/workoutsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_workout_plan"
+        android:title="@string/plans_bottom_text" />
+</menu>

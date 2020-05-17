@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">BrainMove</string>
+    <string name="appointments_bottom_text">Citas</string>
+    <string name="measurements_bottom_text">Medidas</string>
+    <string name="trends_bottom_text">Tendencia</string>
+    <string name="plans_bottom_text">Plan</string>
+    <string name="profile_bottom_text">Perfil</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="date_text">Fecha</string>
+    <string name="trainer_text">Instructora</string>
+    <string name="exercises_text">Ejercicios</string>
+    <string name="weight_label_text">Peso</string>
+    <string name="bmi_label_text">BMI</string>
+    <string name="body_fat_label_text">Grasa corporal</string>
+    <string name="fat_free_body_weight_label_text">Peso corporal sin grasa</string>
+    <string name="subcutaneous_fat_label_text">Grasa subcutanea</string>
+    <string name="visceral_fat_label_text">Grasa visceral</string>
+    <string name="body_water_label_text">Agua corporal</string>
+    <string name="skeletal_muscle_label_text">Musculo esqueletico</string>
+    <string name="muscle_mass_label_text">Masa muscular</string>
+    <string name="bone_mass_label_text">Masa osea</string>
+    <string name="protein_label_text">Proteina</string>
+    <string name="bmr_label_text">BMR</string>
+    <string name="metabolic_age_label_text">Edad metabolica</string>
+</resources>

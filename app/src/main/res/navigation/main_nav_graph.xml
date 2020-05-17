@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/measurementsFragment">
+
+    <fragment
+        android:id="@+id/measurementsFragment"
+        android:name="com.loguito.brainmove.fragments.MeasurementsFragment"
+        android:label="fragment_appointments"
+        tools:layout="@layout/fragment_measurements" />
+    <fragment
+        android:id="@+id/trendsFragment"
+        android:name="com.loguito.brainmove.fragments.TrendsFragment"
+        android:label="fragment_measurements"
+        tools:layout="@layout/fragment_trends" />
+    <fragment
+        android:id="@+id/workoutsFragment"
+        android:name="com.loguito.brainmove.fragments.WorkoutDetailFragment"
+        android:label="fragment_workouts"
+        tools:layout="@layout/fragment_workout_detail" />
+</navigation>
