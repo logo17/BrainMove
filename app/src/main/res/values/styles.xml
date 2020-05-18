@@ -1,10 +1,20 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Widget.Button" parent="TextAppearance.AppCompat.Button" />
+
+    <style name="Button.Primary" parent="Widget.Button">
+        <item name="android:textColor">@color/primary_button_text_selector</item>
+    </style>
+
+    <style name="Widget.Toolbar" parent="ThemeOverlay.AppCompat.Light">
+        <item name="actionMenuTextColor">@color/white</item>
     </style>
 </resources>

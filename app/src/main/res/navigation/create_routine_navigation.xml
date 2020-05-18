@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/create_routine_navigation"
+    app:startDestination="@id/createRoutineFragment">
+    <fragment
+        android:id="@+id/createRoutineFragment"
+        android:name="com.loguito.brainmove.fragments.CreateRoutineFragment"
+        tools:layout="@layout/fragment_create_routine"
+        android:label="CreateRoutineFragment">
+        <action
+            android:id="@+id/action_createRoutineFragment_to_createBlockFragment"
+            app:destination="@id/createBlockFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/createBlockFragment"
+        android:name="com.loguito.brainmove.fragments.CreateBlockFragment"
+        tools:layout="@layout/fragment_create_block"
+        android:label="CreateBlockFragment" />
+</navigation>

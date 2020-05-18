@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/measurementsFragment">
+    app:startDestination="@id/reservationsFragment">
 
     <fragment
         android:id="@+id/measurementsFragment"
@@ -16,8 +16,61 @@
         android:label="fragment_measurements"
         tools:layout="@layout/fragment_trends" />
     <fragment
-        android:id="@+id/workoutsFragment"
+        android:id="@+id/planFragment"
+        android:name="com.loguito.brainmove.fragments.PlanFragment"
+        android:label="fragment_plan"
+        tools:layout="@layout/fragment_plan">
+        <action
+            android:id="@+id/action_planFragment_to_routineFragment"
+            app:destination="@id/routineFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/routineFragment"
+        android:name="com.loguito.brainmove.fragments.RoutineFragment"
+        android:label="RoutineFragment"
+        tools:layout="@layout/fragment_routine">
+        <argument
+            android:name="routine"
+            app:argType="com.loguito.brainmove.models.remote.Routine" />
+        <action
+            android:id="@+id/action_routineFragment_to_workoutDetailFragment"
+            app:destination="@id/workoutDetailFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/workoutDetailFragment"
         android:name="com.loguito.brainmove.fragments.WorkoutDetailFragment"
-        android:label="fragment_workouts"
-        tools:layout="@layout/fragment_workout_detail" />
+        android:label="fragment_workout_detail"
+        tools:layout="@layout/fragment_workout_detail">
+        <argument
+            android:name="block"
+            app:argType="com.loguito.brainmove.models.remote.Block" />
+        <action
+            android:id="@+id/action_workoutDetailFragment_to_exerciseExplanationFragment"
+            app:destination="@id/exerciseExplanationFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseExplanationFragment"
+        android:name="com.loguito.brainmove.fragments.ExerciseExplanationFragment"
+        android:label="ExerciseExplanationFragment">
+        <argument
+            android:name="exercise"
+            app:argType="com.loguito.brainmove.models.remote.Exercise" />
+    </fragment>
+    <fragment
+        android:id="@+id/reservationsFragment"
+        android:name="com.loguito.brainmove.fragments.ReservationsFragment"
+        android:label="ReservationsFragment"
+        tools:layout="@layout/fragment_reservations" />
 </navigation>

@@ -1,0 +1,41 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/measure_from_file_nav_graph"
+    app:startDestination="@id/addMeasureUserSelectionFragment">
+
+    <fragment
+        android:id="@+id/addMeasureUserSelectionFragment"
+        android:name="com.loguito.brainmove.fragments.AddMeasureUserSelectionFragment"
+        android:label="AdminMainFragment"
+        tools:layout="@layout/fragment_generic_user_list">
+        <action
+            android:id="@+id/action_addMeasureUserSelectionFragment_to_reviewUserMeasureFragment3"
+            app:destination="@id/reviewUserMeasureFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+        <argument
+            android:name="measure"
+            app:argType="com.loguito.brainmove.models.remote.Measure" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewUserMeasureFragment"
+        android:name="com.loguito.brainmove.fragments.ReviewUserMeasureFragment"
+        android:label="ReviewUserMeasureFragment"
+        tools:layout="@layout/fragment_review_user_measure">
+        <argument
+            android:name="user"
+            app:argType="com.loguito.brainmove.models.remote.User" />
+        <argument
+            android:name="measurement"
+            app:argType="com.loguito.brainmove.models.remote.Measure" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminMainFragment3"
+        android:name="com.loguito.brainmove.fragments.AdminMainFragment"
+        android:label="AdminMainFragment"
+        tools:layout="@layout/fragment_admin_main"/>
+    <action android:id="@+id/action_global_adminMainFragment3" app:destination="@id/adminMainFragment3" />
+</navigation>

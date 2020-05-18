@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@id/launcherFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.loguito.brainmove.fragments.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_createAccountFragment"
+            app:destination="@id/createAccountFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_adminMainFragment2"
+            app:destination="@id/adminMainFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.loguito.brainmove.fragments.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.loguito.brainmove.fragments.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password" />
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.loguito.brainmove.fragments.CreateAccountFragment"
+        android:label="CreateAccountFragment"
+        tools:layout="@layout/fragment_create_account" />
+    <fragment
+        android:id="@+id/launcherFragment"
+        android:name="com.loguito.brainmove.fragments.LauncherFragment"
+        android:label="LauncherFragment"
+        tools:layout="@layout/fragment_launcher">
+        <action
+            android:id="@+id/action_launcherFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_launcherFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_launcherFragment_to_measure_from_file_nav_graph"
+            app:destination="@id/measure_from_file_nav_graph"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right">
+            <argument
+                android:name="measure"
+                app:argType="com.loguito.brainmove.models.remote.Measure" />
+        </action>
+        <action
+            android:id="@+id/action_launcherFragment_to_adminMainFragment2"
+            app:destination="@id/adminMainFragment2" />
+    </fragment>
+    <include app:graph="@navigation/measure_from_file_nav" />
+    <fragment
+        android:id="@+id/adminMainFragment2"
+        android:name="com.loguito.brainmove.fragments.AdminMainFragment"
+        android:label="AdminMainFragment"
+        tools:layout="@layout/fragment_admin_main" />
+    <action
+        android:id="@+id/action_global_launcherFragment"
+        app:destination="@id/launcherFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.loguito.brainmove.fragments.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_paymentsFragment"
+            app:destination="@id/paymentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentsFragment"
+        android:name="com.loguito.brainmove.fragments.PaymentsFragment"
+        android:label="PaymentsFragment"
+        tools:layout="@layout/fragment_payments"/>
+</navigation>
