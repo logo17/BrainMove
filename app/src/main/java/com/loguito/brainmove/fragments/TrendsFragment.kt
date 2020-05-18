@@ -38,61 +38,62 @@ class TrendsFragment : Fragment() {
         weightChart.trendTitle = "Peso"
         val optionList = arrayListOf(
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_weight_selector,
                 requireContext().getString(R.string.weight_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_bmi_selector,
                 requireContext().getString(R.string.bmi_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_body_fat_selector,
                 requireContext().getString(R.string.body_fat_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_fat_free_body_selector,
                 requireContext().getString(R.string.fat_free_body_weight_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_subcutaneous_fat_selector,
                 requireContext().getString(R.string.subcutaneous_fat_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_visceral_fat_selector,
                 requireContext().getString(R.string.visceral_fat_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_body_water_selector,
                 requireContext().getString(R.string.body_water_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_skeletal_muscle_selector,
                 requireContext().getString(R.string.skeletal_muscle_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_muscle_mass_selector,
                 requireContext().getString(R.string.muscle_mass_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_bone_mass_selector,
                 requireContext().getString(R.string.bone_mass_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_protein_selector,
                 requireContext().getString(R.string.protein_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_bmr_selector,
                 requireContext().getString(R.string.bmr_label_text)
             ),
             TrendOption(
-                R.drawable.ic_healing_black_24dp,
+                R.drawable.ic_metabolical_age_selector,
                 requireContext().getString(R.string.metabolic_age_label_text)
             )
         )
         val adapter = TrendOptionsAdapter()
         trendsOptionsRecyclerView.adapter = adapter
-        trendsOptionsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), HORIZONTAL, false)
+        trendsOptionsRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), HORIZONTAL, false)
         adapter.options = optionList
     }
 }
