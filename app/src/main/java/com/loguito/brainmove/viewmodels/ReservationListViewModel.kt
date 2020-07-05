@@ -73,7 +73,7 @@ class ReservationListViewModel : ViewModel() {
         auth.currentUser?.let { user ->
             _loadingVisibility.postValue(true)
             val reservationRef = db.collection("reservation").document(reservation.id)
-            reservationRef.update("spaces", FieldValue.arrayUnion(user.uid))
+            reservationRef.update("spaces", FieldValue.arrayUnion(user.uid), "isDoingReservation", true)
                 .addOnSuccessListener {
                     _handleReservation.postValue(R.string.make_reservation_success)
                 }
@@ -87,7 +87,7 @@ class ReservationListViewModel : ViewModel() {
         auth.currentUser?.let { user ->
             _loadingVisibility.postValue(true)
             val reservationRef = db.collection("reservation").document(reservation.id)
-            reservationRef.update("spaces", FieldValue.arrayRemove(user.uid))
+            reservationRef.update("spaces", FieldValue.arrayRemove(user.uid), "isDoingReservation", false)
                 .addOnSuccessListener {
                     _handleReservation.postValue(R.string.release_reservation_success)
                 }
