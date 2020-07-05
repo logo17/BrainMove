@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.UserAdapter
+import com.loguito.brainmove.ext.dismissKeyboard
 import com.loguito.brainmove.ext.hideLoadingSpinner
 import com.loguito.brainmove.ext.showDialog
 import com.loguito.brainmove.ext.showLoadingSpinner
@@ -87,6 +88,7 @@ class UserListFragment : Fragment() {
         })
 
         adapter.selectedUser.observe(viewLifecycleOwner, Observer {
+            dismissKeyboard()
             val action = UserListFragmentDirections.actionUserListFragmentToUserDetailFragment(it)
             findNavController().navigate(action)
         })

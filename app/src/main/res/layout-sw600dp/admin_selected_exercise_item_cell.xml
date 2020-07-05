@@ -20,16 +20,27 @@
         tools:ignore="LabelFor"
         tools:text="0" />
 
+    <Spinner
+        android:id="@+id/unitMeasureDropdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/exerciseQuantityEditText"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/exerciseNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/removeExerciseButton"
-        app:layout_constraintStart_toEndOf="@+id/exerciseQuantityEditText"
+        app:layout_constraintStart_toEndOf="@+id/unitMeasureDropdown"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Caída frontal" />
 

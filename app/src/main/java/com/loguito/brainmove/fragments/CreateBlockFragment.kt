@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding3.widget.itemSelections
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.AdminExerciseAdapter
@@ -128,6 +130,16 @@ class CreateBlockFragment : Fragment() {
             sharedViewModel.addBlockToList(it)
             navigateBack()
         })
+
+        viewModel.blockUnitMeasures.observe(viewLifecycleOwner, Observer {
+            val adapter = ArrayAdapter(requireContext(),
+                android.R.layout.simple_spinner_dropdown_item, it)
+            unitMeasureDropdown.adapter = adapter
+        })
+
+        viewModel.workoutUnitMeasures.observe(viewLifecycleOwner, Observer {
+            selectedExercisesAdapter.unitMeasures = it
+        })
     }
 
     @SuppressLint("CheckResult")
@@ -151,6 +163,13 @@ class CreateBlockFragment : Fragment() {
             .skipInitialValue()
             .debounce(Constants.DEBOUNCE_DURATION, TimeUnit.MILLISECONDS)
             .subscribe { viewModel.validateBlockDuration(it.toString()) }
+
+        unitMeasureDropdown.itemSelections()
+            .throttleFirst(Constants.THROTTLE_FIRST_DURATION, TimeUnit.MILLISECONDS)
+            .filter{unitMeasureDropdown.adapter != null}
+            .subscribe {
+                viewModel.validateBlockUnitMeasure(unitMeasureDropdown.adapter.getItem(it).toString())
+            }
 
         blockBackgroundImageLoader.imageUrlEditText.textChanges()
             .skipInitialValue()

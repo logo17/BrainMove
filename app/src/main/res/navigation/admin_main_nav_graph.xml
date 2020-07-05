@@ -17,8 +17,8 @@
             app:argType="com.loguito.brainmove.models.remote.Measure" />
         <argument
             android:name="navigateToRoot"
-            app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/userListFragment"
@@ -48,14 +48,38 @@
             app:argType="com.loguito.brainmove.models.remote.User" />
         <action
             android:id="@+id/action_userDetailFragment_to_create_plan_navigation"
-            app:destination="@id/create_plan_navigation">
+            app:destination="@id/create_plan_navigation"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right">
             <argument
                 android:name="userId"
                 app:argType="string" />
         </action>
         <action
             android:id="@+id/action_userDetailFragment_to_reviewUserMeasureFragment"
-            app:destination="@id/reviewUserMeasureFragment" />
+            app:destination="@id/reviewUserMeasureFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+        <action
+            android:id="@+id/action_userDetailFragment_to_createPaymentFragment"
+            app:destination="@id/createPaymentFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
     </fragment>
     <include app:graph="@navigation/create_plan_navigation" />
+    <fragment
+        android:id="@+id/createPaymentFragment"
+        android:name="com.loguito.brainmove.fragments.CreatePaymentFragment"
+        android:label="CreatePaymentFragment"
+        tools:layout="@layout/fragment_create_payment" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
 </navigation>

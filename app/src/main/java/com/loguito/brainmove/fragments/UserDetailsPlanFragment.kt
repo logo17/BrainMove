@@ -96,6 +96,7 @@ class UserDetailsPlanFragment : Fragment() {
 
     private fun fillPlanData(plan: Plan) {
         planNameTextView.text = plan.name
+        planNameTextView.isSelected = true
         planDateTextView.text =
             String.format(getString(R.string.to_date_label_text), plan.toDate.toReadableDate())
         adapter.routines = plan.routines

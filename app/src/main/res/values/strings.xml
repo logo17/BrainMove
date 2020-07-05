@@ -68,7 +68,6 @@
     <string name="workouts_bottom_text">Ejercicios</string>
     <string name="users_bottom_text">Usuarios</string>
     <string name="customer_no_measures_text">Cliente sin mediciones.</string>
-    <string name="block_duration_text">%d min</string>
     <string name="search_hint_text">Buscar</string>
     <string name="create_block_text">Crear bloque</string>
     <string name="select_exercise_text">Seleccione un ejercicio</string>
@@ -129,7 +128,21 @@
     <string name="settings_title">Configuración</string>
     <string name="accept_button_text">Aceptar</string>
     <string name="retrieve_payment_error">No se ha podido obtener los últimos pagos realizados.</string>
-    <string name="loading_payments_message">Cargando los pagos...</string>
+    <string name="loading_payments_message">Cargando los pagos…</string>
     <string name="my_payments_text">Mis pagos</string>
-    <string name="payments_title">Mis pagos</string>
+    <string name="payments_title">Pagos</string>
+    <string name="no_payments_text">No hay pagos</string>
+    <string name="add_payment_text">Agregar pago</string>
+    <string name="create_payment_text">Crear pago</string>
+    <string name="payment_description_text">Detalle</string>
+    <string name="payment_total_text">Total</string>
+    <string name="due_date_text">Fecha final</string>
+    <string name="from_date_text">Desde</string>
+    <string name="to_date_text">Hasta</string>
+    <string name="creating_payment_loading_message">Registrando el pago…</string>
+
+    <string name="save_payment_success_text">Se ha creado correctamente el pago.</string>
+    <string name="save_payment_failure_text">Ha ocurrido un error al crear el pago.</string>
+    <string name="retrieve_block_measure_error">No se ha podido obtener las medidas de duración de los bloques.</string>
+    <string name="retrieve_workout_measure_error">>No se ha podido obtener las medidas de duración de los ejercicios.</string>
 </resources>

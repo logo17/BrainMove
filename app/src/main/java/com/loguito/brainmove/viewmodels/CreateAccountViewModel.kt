@@ -54,10 +54,12 @@ class CreateAccountViewModel : ViewModel() {
                         "fullName" to name,
                         "email" to user.email,
                         "id" to user.uid,
-                        "keywords" to keywords
+                        "keywords" to keywords,
+                        "isBlocked" to false
                     )
                     db.collection("users")
-                        .add(userDetails)
+                        .document(user.uid)
+                        .set(userDetails)
                         .addOnSuccessListener {
                             user.sendEmailVerification()
                                 .addOnCompleteListener { task ->

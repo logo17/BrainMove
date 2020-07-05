@@ -64,10 +64,10 @@ class UserDetailsTrendsFragment : Fragment() {
         viewModel.measures.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 emptyContainer.visibility = View.VISIBLE
-                measuresContainer.visibility = View.GONE
+                dataContainer.visibility = View.GONE
             } else {
                 emptyContainer.visibility = View.GONE
-                measuresContainer.visibility = View.VISIBLE
+                dataContainer.visibility = View.VISIBLE
                 measures = it
                 fillMeasures(MeasurementOption.fromInt(0))
             }

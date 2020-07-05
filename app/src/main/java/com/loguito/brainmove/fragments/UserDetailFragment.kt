@@ -39,7 +39,8 @@ class UserDetailFragment : Fragment() {
                 when (position) {
                     0 -> R.string.measurements_bottom_text
                     1 -> R.string.trends_bottom_text
-                    else -> R.string.plans_bottom_text
+                    2 -> R.string.plans_bottom_text
+                    else -> R.string.payments_title
                 }
             )
         }.attach()

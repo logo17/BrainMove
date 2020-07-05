@@ -54,7 +54,6 @@ class ReviewUserMeasureFragment : Fragment() {
     }
 
     private fun initViews() {
-        emailTextView.text = user.email
         nameTextView.text = user.fullName
         measuresContainer.measure = measure
     }

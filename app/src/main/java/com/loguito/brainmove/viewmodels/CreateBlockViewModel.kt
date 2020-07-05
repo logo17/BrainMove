@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.loguito.brainmove.R
 import com.loguito.brainmove.models.remote.Block
 import com.loguito.brainmove.models.remote.Exercise
+import com.loguito.brainmove.models.remote.UnitMeasure
 import java.util.*
 
 class CreateBlockViewModel : ViewModel() {
@@ -15,6 +16,7 @@ class CreateBlockViewModel : ViewModel() {
     private var blockName: String = ""
     private var blockDescription: String = ""
     private var blockDuration: String = ""
+    private var blockUnitMeasure: String = ""
     private var blockBackgroundImageUrl: String = ""
     private var exerciseList = mutableListOf<Exercise>()
 
@@ -24,6 +26,8 @@ class CreateBlockViewModel : ViewModel() {
     private var _exerciseError = MutableLiveData<Int>()
     private var _loadingVisibility = MutableLiveData<Boolean>()
     private var _areValidFields = MutableLiveData<Boolean>()
+    private var _blockUnitMeasures = MutableLiveData<List<UnitMeasure>>()
+    private var _workoutUnitMeasures = MutableLiveData<List<UnitMeasure>>()
 
     val exercises: LiveData<List<Exercise>>
         get() = _exercises
@@ -37,6 +41,41 @@ class CreateBlockViewModel : ViewModel() {
         get() = _areValidFields
     val block: LiveData<Block>
         get() = _block
+    val blockUnitMeasures: LiveData<List<UnitMeasure>>
+        get() = _blockUnitMeasures
+    val workoutUnitMeasures: LiveData<List<UnitMeasure>>
+        get() = _workoutUnitMeasures
+
+    init {
+        _loadingVisibility.postValue(true)
+        db.collection("block_unit_measure")
+            .get()
+            .addOnSuccessListener { result ->
+                if (result.isEmpty) {
+                    _blockUnitMeasures.postValue(emptyList())
+                } else {
+                    _blockUnitMeasures.postValue(result.toObjects(UnitMeasure::class.java))
+                }
+                db.collection("workout_unit_measure")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        _loadingVisibility.postValue(false)
+                        if (result.isEmpty) {
+                            _workoutUnitMeasures.postValue(emptyList())
+                        } else {
+                            _workoutUnitMeasures.postValue(result.toObjects(UnitMeasure::class.java))
+                        }
+                    }
+                    .addOnFailureListener {
+                        _loadingVisibility.postValue(false)
+                        _exerciseError.postValue(R.string.retrieve_workout_measure_error)
+                    }
+            }
+            .addOnFailureListener {
+                _loadingVisibility.postValue(false)
+                _exerciseError.postValue(R.string.retrieve_block_measure_error)
+            }
+    }
 
     fun getExerciseByKeyword(keyWord: String) {
         _loadingVisibility.postValue(true)
@@ -73,6 +112,12 @@ class CreateBlockViewModel : ViewModel() {
         validateFields()
     }
 
+
+    fun validateBlockUnitMeasure(unitMeasure: String) {
+        blockUnitMeasure = unitMeasure
+        validateFields()
+    }
+
     fun validateBlockBackgroundImageUrl(url: String) {
         blockBackgroundImageUrl = url
         validateFields()
@@ -96,7 +141,7 @@ class CreateBlockViewModel : ViewModel() {
     }
 
     private fun validateFields() {
-        _areValidFields.postValue(blockName.isNotEmpty() && blockDescription.isNotEmpty() && blockDuration.isNotEmpty() && blockBackgroundImageUrl.isNotEmpty() && (exerciseList.isNotEmpty() && exerciseList.any { it.quantity.isEmpty() }
+        _areValidFields.postValue(blockName.isNotEmpty() && blockDescription.isNotEmpty() && blockDuration.isNotEmpty() && blockUnitMeasure.isNotEmpty() && blockBackgroundImageUrl.isNotEmpty() && (exerciseList.isNotEmpty() && exerciseList.any { it.quantity.split(" ")[0].equals("0") }
             .not()))
     }
 
@@ -104,7 +149,7 @@ class CreateBlockViewModel : ViewModel() {
         _block.postValue(
             Block(
                 blockDescription,
-                "",//TODO Hanlde this on Admin
+                blockUnitMeasure,
                 blockDuration.toInt(),
                 blockBackgroundImageUrl,
                 blockName,

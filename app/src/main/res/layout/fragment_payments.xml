@@ -17,7 +17,7 @@
         android:paddingTop="6dp"
         android:paddingEnd="24dp"
         android:paddingBottom="6dp"
-        android:text="@string/payments_title"
+        android:text="@string/my_payments_text"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/white"

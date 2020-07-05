@@ -78,24 +78,40 @@
                         android:inputType="text"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayout3"
+                
+                <LinearLayout
+                    android:id="@+id/durationContainer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="@string/duration_hint"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/blockDurationEditText"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayout3"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:hint="@string/duration_hint"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/blockDurationEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    
+                    <Spinner
+                        android:id="@+id/unitMeasureDropdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"
+                        android:layout_marginStart="8dp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
 
                 <com.loguito.brainmove.widgets.ImageLoaderWidget
                     android:id="@+id/blockBackgroundImageLoader"
@@ -106,7 +122,7 @@
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+                    app:layout_constraintTop_toBottomOf="@+id/durationContainer" />
 
 
                 <TextView

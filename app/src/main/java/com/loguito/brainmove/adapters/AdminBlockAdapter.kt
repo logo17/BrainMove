@@ -37,8 +37,7 @@ class AdminBlockAdapter : RecyclerView.Adapter<AdminBlockAdapter.AdminBlockViewH
             val adapter = AdminExerciseAdapter()
 
             itemView.blockNameTextView.text = block.name
-            itemView.blockDurationTextView.text =
-                itemView.context.getString(R.string.block_duration_text, block.duration)
+            itemView.blockDurationTextView.text = String.format("%d %s", block.duration, block.unit)
             itemView.exercisesRecyclerView.layoutManager = LinearLayoutManager(itemView.context)
             itemView.exercisesRecyclerView.adapter = adapter
             ContextCompat.getDrawable(itemView.context, R.drawable.divider_item_bg)?.let {
