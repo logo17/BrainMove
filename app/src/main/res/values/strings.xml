@@ -145,4 +145,21 @@
     <string name="save_payment_failure_text">Ha ocurrido un error al crear el pago.</string>
     <string name="retrieve_block_measure_error">No se ha podido obtener las medidas de duración de los bloques.</string>
     <string name="retrieve_workout_measure_error">>No se ha podido obtener las medidas de duración de los ejercicios.</string>
+    <string name="admin_reservation_hour_text">Hora:</string>
+    <string name="admin_reservation_max_amount_text">Capacidad máxima:</string>
+    <string name="admin_reservation_available_text">Espacios disponibles:</string>
+    <string name="admin_reservation_participants_text">Participantes:</string>
+    <string name="admin_reservation_max_amount_value_text">%d personas</string>
+    <string name="admin_reservation_available_value_text">%d espacios</string>
+    <string name="hour_text">Hora</string>
+    <string name="create_reservation_text">Crear sesión</string>
+    <string name="add_session_text">Agregar sesión</string>
+    <string name="select_hour_text">Seleccione una hora</string>
+    <string name="save_session_success_text">Se ha creado correctamente la sesión.</string>
+    <string name="save_session_failure_text">Ha ocurrido un error al crear la sesión.</string>
+    <string name="creating_session_loading_message">Registrando la sesión…</string>
+    <string name="remove_session_alert">Desea borrar esta sesión de entrenamiento?</string>
+    <string name="remove_session_success">Se ha eliminado la sesión correctamente.</string>
+    <string name="remove_session_error">Ha ocurrido un error al eliminar la sesión.</string>
+    <string name="category_text">Categoría</string>
 </resources>

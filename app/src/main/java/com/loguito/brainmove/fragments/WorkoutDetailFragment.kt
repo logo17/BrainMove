@@ -8,13 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.WorkoutDetailAdapter
+import com.loguito.brainmove.adapters.decorator.VerticalSpaceItemDecoration
 import com.loguito.brainmove.models.remote.Block
-import kotlinx.android.synthetic.main.fragment_routine.*
 import kotlinx.android.synthetic.main.fragment_workout_detail.*
-import kotlinx.android.synthetic.main.fragment_workout_detail.toolbar
 
 
 class WorkoutDetailFragment : Fragment() {
@@ -45,13 +43,12 @@ class WorkoutDetailFragment : Fragment() {
                 )
             findNavController().navigate(action)
         })
+        workoutRecyclerView.addItemDecoration(VerticalSpaceItemDecoration(40))
         workoutRecyclerView.adapter = adapter
     }
 
     private fun initViews(block: Block) {
         adapter.exerciseList = block.exercises
-        Glide.with(this).load(block.imageUrl)
-            .into(imageView2)
         toolbar.title = block.name
         toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()

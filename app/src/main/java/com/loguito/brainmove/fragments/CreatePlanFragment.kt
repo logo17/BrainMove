@@ -69,14 +69,17 @@ class CreatePlanFragment : Fragment() {
 
         viewModel.savePlanResponse.observe(viewLifecycleOwner, Observer {
             if (it) {
-                showDialog(getString(R.string.save_plan_success_text), R.string.accept_button_text, listener = object :
-                    OnDialogButtonClicked {
-                    override fun onPositiveButtonClicked() {
-                        navigateBack()
-                    }
+                showDialog(
+                    getString(R.string.save_plan_success_text),
+                    R.string.accept_button_text,
+                    listener = object :
+                        OnDialogButtonClicked {
+                        override fun onPositiveButtonClicked() {
+                            navigateBack()
+                        }
 
-                    override fun onNegativeButtonClicked() {}
-                })
+                        override fun onNegativeButtonClicked() {}
+                    })
             } else {
                 showDialog(getString(R.string.save_plan_failure_text), R.string.accept_button_text)
             }
@@ -133,7 +136,12 @@ class CreatePlanFragment : Fragment() {
                 val dateRangePicker = buildDateRangePicker()
                 dateRangePicker.show(parentFragmentManager, dateRangePicker.toString())
                 dateRangePicker.addOnPositiveButtonClickListener {
-                    viewModel.validateDates(Date(it.first ?: 0), Date(it.second ?: 0))
+                    val fromDate = Date(it.first ?: 0)
+                    val toDate = Date(it.second ?: 0)
+                    val fromDateFormattedDate =
+                        fromDate.toShortDateFromPicker().shorDateStringToDate()
+                    val toDateFormattedDate = toDate.toShortDateFromPicker().shorDateStringToDate()
+                    viewModel.validateDates(fromDateFormattedDate, toDateFormattedDate)
                 }
             }
     }

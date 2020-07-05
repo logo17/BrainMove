@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:cardCornerRadius="10dp"
@@ -17,14 +17,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
             <ImageView
                 android:id="@+id/workoutImageView"
-                android:layout_width="134dp"
-                android:layout_height="134dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,25 +44,23 @@
                 <TextView
                     android:id="@+id/workoutQuantityTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="#f39200"
-                    android:paddingStart="4dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="4dp"
-                    android:paddingBottom="8dp"
+                    android:padding="8dp"
                     android:textColor="@color/white"
                     android:textSize="12sp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
                     tools:text="8 rep" />
 
                 <TextView
                     android:id="@+id/workoutTitleTextView"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#00a19a"
                     android:gravity="center"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
+                    android:padding="8dp"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold"

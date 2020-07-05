@@ -40,6 +40,7 @@ class RoutineAdapter : RecyclerView.Adapter<RoutineAdapter.RoutineViewHolder>() 
         fun bind(block: Block) {
             itemView.setOnClickListener { _selectedBlock.postValue(block) }
             Glide.with(itemView.context).load(block.imageUrl)
+                .placeholder(R.drawable.loading_background_placeholder)
                 .into(itemView.routineImageView)
             itemView.routineNameTextView.text = block.name
         }

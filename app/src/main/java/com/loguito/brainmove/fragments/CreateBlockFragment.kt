@@ -26,7 +26,6 @@ import com.loguito.brainmove.utils.Constants
 import com.loguito.brainmove.viewmodels.CreateBlockViewModel
 import com.loguito.brainmove.viewmodels.CreateRoutineViewModel
 import kotlinx.android.synthetic.main.fragment_create_block.*
-import kotlinx.android.synthetic.main.image_loader_widget.view.*
 import java.util.concurrent.TimeUnit
 
 class CreateBlockFragment : Fragment() {
@@ -132,13 +131,19 @@ class CreateBlockFragment : Fragment() {
         })
 
         viewModel.blockUnitMeasures.observe(viewLifecycleOwner, Observer {
-            val adapter = ArrayAdapter(requireContext(),
-                android.R.layout.simple_spinner_dropdown_item, it)
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item, it
+            )
             unitMeasureDropdown.adapter = adapter
         })
 
         viewModel.workoutUnitMeasures.observe(viewLifecycleOwner, Observer {
             selectedExercisesAdapter.unitMeasures = it
+        })
+
+        viewModel.blockImageList.observe(viewLifecycleOwner, Observer {
+            blockBackgroundImageLoader.blockImages = it
         })
     }
 
@@ -166,14 +171,15 @@ class CreateBlockFragment : Fragment() {
 
         unitMeasureDropdown.itemSelections()
             .throttleFirst(Constants.THROTTLE_FIRST_DURATION, TimeUnit.MILLISECONDS)
-            .filter{unitMeasureDropdown.adapter != null}
+            .filter { unitMeasureDropdown.adapter != null }
             .subscribe {
-                viewModel.validateBlockUnitMeasure(unitMeasureDropdown.adapter.getItem(it).toString())
+                viewModel.validateBlockUnitMeasure(
+                    unitMeasureDropdown.adapter.getItem(it).toString()
+                )
             }
 
-        blockBackgroundImageLoader.imageUrlEditText.textChanges()
-            .skipInitialValue()
-            .debounce(Constants.DEBOUNCE_DURATION, TimeUnit.MILLISECONDS)
-            .subscribe { viewModel.validateBlockBackgroundImageUrl(it.toString()) }
+        blockBackgroundImageLoader.handleImageSelected.observe(viewLifecycleOwner, Observer {
+            viewModel.validateBlockBackgroundImageUrl(it.toString())
+        })
     }
 }

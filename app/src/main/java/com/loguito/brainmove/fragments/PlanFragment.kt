@@ -59,6 +59,8 @@ class PlanFragment : Fragment() {
             Observer {
                 dataContainer.visibility = if (it == null) View.GONE else View.VISIBLE
                 emptyPlanView.visibility = if (it == null) View.VISIBLE else View.GONE
+                emptyImageView.visibility = if (it == null) View.VISIBLE else View.GONE
+                imageView2.visibility = if (it == null) View.GONE else View.VISIBLE
                 if (it == null) {
                     planNameTextView.isEnabled = false
                     planNameTextView.text = getString(R.string.no_plans_text)

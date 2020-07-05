@@ -16,6 +16,7 @@ import com.loguito.brainmove.ext.*
 import com.loguito.brainmove.utils.Constants
 import com.loguito.brainmove.viewmodels.CreatePaymentViewModel
 import com.loguito.brainmove.widgets.OnDialogButtonClicked
+import kotlinx.android.synthetic.main.fragment_admin_reservation_list.*
 import kotlinx.android.synthetic.main.fragment_create_payment.*
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -118,7 +119,11 @@ class CreatePaymentFragment : Fragment() {
                 val dateRangePicker = buildDateRangePicker()
                 dateRangePicker.show(parentFragmentManager, dateRangePicker.toString())
                 dateRangePicker.addOnPositiveButtonClickListener {
-                    viewModel.validateDates(Date(it.first ?: 0), Date(it.second ?: 0))
+                    val paymentDate = Date(it.first ?: 0)
+                    val dueDate = Date(it.second ?: 0)
+                    val paymentDateFormattedDate = paymentDate.toShortDateFromPicker().shorDateStringToDate()
+                    val dueDateFormattedDate = dueDate.toShortDateFromPicker().shorDateStringToDate()
+                    viewModel.validateDates(paymentDateFormattedDate, dueDateFormattedDate)
                 }
             }
 

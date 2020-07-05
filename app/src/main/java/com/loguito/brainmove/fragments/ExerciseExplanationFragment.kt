@@ -29,7 +29,10 @@ class ExerciseExplanationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.with(this).load(args.exercise.demoUrl).into(exerciseExplanationImageView)
+        Glide.with(this)
+            .load(args.exercise.demoUrl)
+            .placeholder(R.drawable.loading_background_placeholder)
+            .into(exerciseExplanationImageView)
         toolbar.title = args.exercise.name
         toolbar.setNavigationOnClickListener {
             navigateBack()

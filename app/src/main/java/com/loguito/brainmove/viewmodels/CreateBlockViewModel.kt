@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.loguito.brainmove.R
 import com.loguito.brainmove.models.remote.Block
+import com.loguito.brainmove.models.remote.BlockImage
 import com.loguito.brainmove.models.remote.Exercise
 import com.loguito.brainmove.models.remote.UnitMeasure
 import java.util.*
@@ -28,6 +29,7 @@ class CreateBlockViewModel : ViewModel() {
     private var _areValidFields = MutableLiveData<Boolean>()
     private var _blockUnitMeasures = MutableLiveData<List<UnitMeasure>>()
     private var _workoutUnitMeasures = MutableLiveData<List<UnitMeasure>>()
+    private var _blockImageList = MutableLiveData<List<BlockImage>>()
 
     val exercises: LiveData<List<Exercise>>
         get() = _exercises
@@ -45,6 +47,8 @@ class CreateBlockViewModel : ViewModel() {
         get() = _blockUnitMeasures
     val workoutUnitMeasures: LiveData<List<UnitMeasure>>
         get() = _workoutUnitMeasures
+    val blockImageList: LiveData<List<BlockImage>>
+        get() = _blockImageList
 
     init {
         _loadingVisibility.postValue(true)
@@ -74,6 +78,15 @@ class CreateBlockViewModel : ViewModel() {
             .addOnFailureListener {
                 _loadingVisibility.postValue(false)
                 _exerciseError.postValue(R.string.retrieve_block_measure_error)
+            }
+
+        db.collection("block_images")
+            .get()
+            .addOnSuccessListener { result ->
+                _blockImageList.postValue(result.toObjects(BlockImage::class.java))
+            }
+            .addOnFailureListener {
+                _blockImageList.postValue(emptyList())
             }
     }
 
@@ -141,7 +154,11 @@ class CreateBlockViewModel : ViewModel() {
     }
 
     private fun validateFields() {
-        _areValidFields.postValue(blockName.isNotEmpty() && blockDescription.isNotEmpty() && blockDuration.isNotEmpty() && blockUnitMeasure.isNotEmpty() && blockBackgroundImageUrl.isNotEmpty() && (exerciseList.isNotEmpty() && exerciseList.any { it.quantity.split(" ")[0].equals("0") }
+        _areValidFields.postValue(blockName.isNotEmpty() && blockDescription.isNotEmpty() && blockDuration.isNotEmpty() && blockUnitMeasure.isNotEmpty() && blockBackgroundImageUrl.isNotEmpty() && (exerciseList.isNotEmpty() && exerciseList.any {
+            it.quantity.split(
+                " "
+            )[0].equals("0")
+        }
             .not()))
     }
 

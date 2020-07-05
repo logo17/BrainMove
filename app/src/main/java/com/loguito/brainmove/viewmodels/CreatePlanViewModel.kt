@@ -1,11 +1,10 @@
 package com.loguito.brainmove.viewmodels
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
-import com.loguito.brainmove.ext.toReadableDate
+import com.loguito.brainmove.ext.toReadableDateFromPicker
 import com.loguito.brainmove.models.remote.Plan
 import com.loguito.brainmove.models.remote.Routine
 import java.util.*
@@ -58,8 +57,8 @@ class CreatePlanViewModel : ViewModel() {
             _dateRangeAsString.postValue(
                 String.format(
                     "%s - %s",
-                    fromDate.toReadableDate(),
-                    toDate.toReadableDate()
+                    fromDate.toReadableDateFromPicker(),
+                    toDate.toReadableDateFromPicker()
                 )
             )
         }

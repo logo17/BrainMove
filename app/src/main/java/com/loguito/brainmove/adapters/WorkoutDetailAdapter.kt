@@ -47,6 +47,7 @@ class WorkoutDetailAdapter : RecyclerView.Adapter<WorkoutDetailAdapter.ExerciseV
             view.workoutQuantityTextView.text = exercise.quantity
             Glide.with(view)
                 .load(exercise.backgroundImageUrl)
+                .placeholder(R.drawable.loading_background_placeholder)
                 .into(view.workoutImageView)
         }
     }

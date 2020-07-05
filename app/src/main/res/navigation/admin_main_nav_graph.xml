@@ -35,9 +35,13 @@
     </fragment>
     <fragment
         android:id="@+id/eventListFragment"
-        android:name="com.loguito.brainmove.fragments.EventListFragment"
+        android:name="com.loguito.brainmove.fragments.AdminReservationListFragment"
         android:label="EventListFragment"
-        tools:layout="@layout/fragment_event_list" />
+        tools:layout="@layout/fragment_admin_reservation_list" >
+        <action
+            android:id="@+id/action_eventListFragment_to_adminCreateReservationFragment"
+            app:destination="@id/adminCreateReservationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userDetailFragment"
         android:name="com.loguito.brainmove.fragments.UserDetailFragment"
@@ -82,4 +86,9 @@
             android:name="userId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/adminCreateReservationFragment"
+        android:name="com.loguito.brainmove.fragments.AdminCreateReservationFragment"
+        android:label="AdminCreateReservationFragment"
+        tools:layout="@layout/fragment_admin_create_reservation"/>
 </navigation>

@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.loguito.brainmove.R
 import com.loguito.brainmove.models.local.Reservation
 import com.loguito.brainmove.models.remote.RemoteReservation
+import com.loguito.brainmove.models.remote.User
 import java.util.*
 
 class ReservationListViewModel : ViewModel() {
@@ -54,7 +55,7 @@ class ReservationListViewModel : ViewModel() {
                                 currentReservation.maxCapacity,
                                 currentReservation.date,
                                 (currentReservation.maxCapacity - currentReservation.spaces.size),
-                                currentReservation.spaces.contains(user.uid),
+                                reservationContainsUser(currentReservation.spaces, user.uid),
                                 currentReservation.activityId
                             )
                             resultList.add(reservation)
@@ -72,8 +73,12 @@ class ReservationListViewModel : ViewModel() {
     fun makeReservation(reservation: Reservation) {
         auth.currentUser?.let { user ->
             _loadingVisibility.postValue(true)
+            val userDetails = hashMapOf(
+                "fullName" to user.displayName,
+                "id" to user.uid
+            )
             val reservationRef = db.collection("reservation").document(reservation.id)
-            reservationRef.update("spaces", FieldValue.arrayUnion(user.uid), "isDoingReservation", true)
+            reservationRef.update("spaces", FieldValue.arrayUnion(userDetails), "isDoingReservation", true)
                 .addOnSuccessListener {
                     _handleReservation.postValue(R.string.make_reservation_success)
                 }
@@ -86,8 +91,12 @@ class ReservationListViewModel : ViewModel() {
     fun releaseReservation(reservation: Reservation) {
         auth.currentUser?.let { user ->
             _loadingVisibility.postValue(true)
+            val userDetails = hashMapOf(
+                "fullName" to user.displayName,
+                "id" to user.uid
+            )
             val reservationRef = db.collection("reservation").document(reservation.id)
-            reservationRef.update("spaces", FieldValue.arrayRemove(user.uid), "isDoingReservation", false)
+            reservationRef.update("spaces", FieldValue.arrayRemove(userDetails), "isDoingReservation", false)
                 .addOnSuccessListener {
                     _handleReservation.postValue(R.string.release_reservation_success)
                 }
@@ -95,5 +104,10 @@ class ReservationListViewModel : ViewModel() {
                     _reservationListError.postValue(R.string.release_reservation_error)
                 }
         }
+    }
+
+    private fun reservationContainsUser(list: List<User>, userId: String) : Boolean {
+        val user = User(id = userId)
+        return list.contains(user)
     }
 }

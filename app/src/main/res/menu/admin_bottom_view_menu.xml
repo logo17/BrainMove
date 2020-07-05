@@ -9,5 +9,5 @@
         android:id="@+id/eventListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_event_black_24dp"
-        android:title="@string/agenda_bottom_text" />
+        android:title="@string/reservation_bottom_text" />
 </menu>

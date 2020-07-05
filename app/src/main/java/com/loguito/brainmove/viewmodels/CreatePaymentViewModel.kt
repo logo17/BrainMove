@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
-import com.loguito.brainmove.ext.toReadableDate
+import com.loguito.brainmove.ext.toReadableDateFromPicker
 import com.loguito.brainmove.models.remote.Payment
 import java.util.*
 
@@ -46,8 +46,8 @@ class CreatePaymentViewModel : ViewModel() {
         this.paymentDate = paymentDate
         this.dueDate = dueDate
         if (paymentDate != null && dueDate != null) {
-            _fromDate.postValue(paymentDate.toReadableDate())
-            _toDate.postValue(dueDate.toReadableDate())
+            _fromDate.postValue(paymentDate.toReadableDateFromPicker())
+            _toDate.postValue(dueDate.toReadableDateFromPicker())
         }
         validateFields()
     }

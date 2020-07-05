@@ -6,7 +6,6 @@ import android.content.Intent
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
@@ -32,6 +31,13 @@ fun buildDateRangePicker(): MaterialDatePicker<Pair<Long, Long>> {
         MaterialDatePicker.Builder.dateRangePicker()
     return builder.build()
 }
+
+fun buildDatePicker(): MaterialDatePicker<Long> {
+    val builder: MaterialDatePicker.Builder<Long> =
+        MaterialDatePicker.Builder.datePicker()
+    return builder.build()
+}
+
 
 fun Fragment.showFileChooser() {
     var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
