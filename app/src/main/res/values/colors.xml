@@ -3,9 +3,18 @@
     <color name="colorPrimary">#00A19A</color>
     <color name="colorPrimaryDark">#FF00796B</color>
     <color name="colorSecondary">#F39200</color>
-    <color name="colorAccent">#000000</color>
+    <color name="colorAccent">#F39200</color>
     <color name="white">#FFFFFF</color>
+    <color name="overlay_white">#B3FFFFFF</color>
     <color name="overlay_black">#33000000</color>
     <color name="widget_overlay_black">#99000000</color>
     <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+    <color name="backgroundGray">#FAFAFA</color>
+    <color name="textGray">#686563</color>
+    <color name="selected_text_color">#f39200</color>
+    <color name="unselected_text_color">#898989</color>
+    <color name="button_reservation_selected_color">#00a19a</color>
+    <color name="button_reservation_disabled_color">#898989</color>
+    <color name="button_reservation_enabled_color">#f39200</color>
 </resources>

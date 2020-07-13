@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/create_plan_navigation"
+    app:startDestination="@id/createPlanFragment">
+
+    <fragment
+        android:id="@+id/createPlanFragment"
+        android:name="com.loguito.brainmove.fragments.CreatePlanFragment"
+        tools:layout="@layout/fragment_create_plan"
+        android:label="CreatePlanFragment">
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_createPlanFragment_to_create_routine_navigation"
+            app:destination="@id/create_routine_navigation"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+    </fragment>
+    <include app:graph="@navigation/create_routine_navigation" />
+</navigation>

@@ -8,6 +8,22 @@
     <declare-styleable name="MeasurementWidget">
         <attr name="label" format="string" />
         <attr name="value" format="string" />
-        <attr name="isDividerVisible" format="boolean" />
+        <attr name="android:enabled" />
+    </declare-styleable>
+
+    <declare-styleable name="LoadingWidget">
+        <attr name="loadingMessage" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="EmptyListWidget">
+        <attr name="description" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="MainButtonWidget">
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="android:background" />
+        <attr name="android:enabled" />
     </declare-styleable>
 </resources>

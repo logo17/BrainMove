@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:orientation="vertical"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/primary_rounded_drawable_selector"
+        android:enabled="false"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/measurementsContainer1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/weightMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/weight_label_text"
+            tools:value="73.90 kg" />
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/bmiMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/bmi_label_text"
+            tools:value="24.9" />
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/bodyFatMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/body_fat_label_text"
+            tools:value="13.4 %" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/measurementsContainer2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/fatFreeBodyMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/fat_free_body_weight_label_text"
+            tools:value="63.06 kg" />
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/subcutaneousFatMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/subcutaneous_fat_label_text"
+            tools:value="11.2 %" />
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/visceralFatMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/visceral_fat_label_text"
+            tools:value="7" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/measurementsContainer3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/bodyWaterMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/body_water_label_text"
+            tools:value="62.5 %" />
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/skeletalMuscleMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/skeletal_muscle_label_text"
+            tools:value="56.0 %" />
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/muscleMassMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/muscle_mass_label_text"
+            tools:value="59.90 kg" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/measurementsContainer4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/boneMassMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/bone_mass_label_text"
+            tools:value="3.15 kg" />
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/proteinMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/protein_label_text"
+            tools:value="19.8 %" />
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/bmrMeasurementWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/bmr_label_text"
+            tools:value="1732 kcal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/measurementsContainer5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1" />
+
+        <com.loguito.brainmove.widgets.MeasurementWidget
+            android:id="@+id/metabolicalAgeMeasurementsWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            app:label="@string/metabolic_age_label_text"
+            tools:value="27" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</merge>

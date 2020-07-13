@@ -1,205 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.MeasurementsFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_profile_icon"
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:padding="8dp"
+                android:src="@drawable/ic_settings_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:text="Heriberto Urena Madrigal"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="burenam17@gmail.com"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@color/colorPrimary"
-            android:gravity="start"
-            android:padding="8dp"
-            android:textColor="@color/white"
-            android:text="Fecha: 17/03/2020"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profile_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="true"
-                app:label="@string/weight_label_text"
-                app:value="73.90 kg" />
+                android:orientation="vertical"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <com.loguito.brainmove.widgets.MeasurementWidget
+                <ImageView
+                    android:id="@+id/userImageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_profile_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/userImageView"
+                    tools:text="Heriberto Urena Madrigal" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_photo"
+                    app:layout_constraintBottom_toBottomOf="@+id/userImageView"
+                    app:layout_constraintEnd_toEndOf="@+id/userImageView"
+                    tools:ignore="ContentDescription" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.loguito.brainmove.widgets.MeasurementListWidget
+                android:id="@+id/measuresContainer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="true"
-                app:label="@string/bmi_label_text"
-                app:value="24.9" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_container" />
 
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="false"
-                app:label="@string/body_fat_label_text"
-                app:value="13.4 %" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="true"
-                app:label="@string/fat_free_body_weight_label_text"
-                app:value="63.06 kg" />
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="true"
-                app:label="@string/subcutaneous_fat_label_text"
-                app:value="11.2 %" />
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="false"
-                app:label="@string/visceral_fat_label_text"
-                app:value="7" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="true"
-                app:label="@string/body_water_label_text"
-                app:value="62.5 %" />
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="true"
-                app:label="@string/skeletal_muscle_label_text"
-                app:value="56.0 %" />
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="false"
-                app:label="@string/muscle_mass_label_text"
-                app:value="59.90 kg" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="true"
-                app:label="@string/bone_mass_label_text"
-                app:value="3.15 kg" />
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="true"
-                app:label="@string/protein_label_text"
-                app:value="19.8 %" />
-
-            <com.loguito.brainmove.widgets.MeasurementWidget
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isDividerVisible="false"
-                app:label="@string/bmr_label_text"
-                app:value="1732 kcal" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
-        <com.loguito.brainmove.widgets.MeasurementWidget
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:isDividerVisible="false"
-            app:label="@string/metabolic_age_label_text"
-            app:value="27" />
-
-    </LinearLayout>
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

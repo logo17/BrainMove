@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_main_nav_graph"
+    app:startDestination="@id/userListFragment">
+    <fragment
+        android:id="@+id/reviewUserMeasureFragment"
+        android:name="com.loguito.brainmove.fragments.ReviewUserMeasureFragment"
+        android:label="ReviewUserMeasureFragment"
+        tools:layout="@layout/fragment_review_user_measure">
+        <argument
+            android:name="user"
+            app:argType="com.loguito.brainmove.models.remote.User" />
+        <argument
+            android:name="measurement"
+            app:argType="com.loguito.brainmove.models.remote.Measure" />
+        <argument
+            android:name="navigateToRoot"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/userListFragment"
+        android:name="com.loguito.brainmove.fragments.UserListFragment"
+        android:label="UserListFragment"
+        tools:layout="@layout/fragment_generic_user_list">
+        <action
+            android:id="@+id/action_userListFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventListFragment"
+        android:name="com.loguito.brainmove.fragments.AdminReservationListFragment"
+        android:label="EventListFragment"
+        tools:layout="@layout/fragment_admin_reservation_list" >
+        <action
+            android:id="@+id/action_eventListFragment_to_adminCreateReservationFragment"
+            app:destination="@id/adminCreateReservationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.loguito.brainmove.fragments.UserDetailFragment"
+        android:label="UserDetailFragment"
+        tools:layout="@layout/fragment_user_detail">
+        <argument
+            android:name="user"
+            app:argType="com.loguito.brainmove.models.remote.User" />
+        <action
+            android:id="@+id/action_userDetailFragment_to_create_plan_navigation"
+            app:destination="@id/create_plan_navigation"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right">
+            <argument
+                android:name="userId"
+                app:argType="string" />
+        </action>
+        <action
+            android:id="@+id/action_userDetailFragment_to_reviewUserMeasureFragment"
+            app:destination="@id/reviewUserMeasureFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+        <action
+            android:id="@+id/action_userDetailFragment_to_createPaymentFragment"
+            app:destination="@id/createPaymentFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+    </fragment>
+    <include app:graph="@navigation/create_plan_navigation" />
+    <fragment
+        android:id="@+id/createPaymentFragment"
+        android:name="com.loguito.brainmove.fragments.CreatePaymentFragment"
+        android:label="CreatePaymentFragment"
+        tools:layout="@layout/fragment_create_payment" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminCreateReservationFragment"
+        android:name="com.loguito.brainmove.fragments.AdminCreateReservationFragment"
+        android:label="AdminCreateReservationFragment"
+        tools:layout="@layout/fragment_admin_create_reservation"/>
+</navigation>

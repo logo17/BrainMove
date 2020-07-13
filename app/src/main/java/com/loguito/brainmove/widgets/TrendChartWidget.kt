@@ -8,32 +8,42 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.loguito.brainmove.R
 import com.loguito.brainmove.ext.toAppStyle
-import com.loguito.brainmove.formatters.WeightFormatter
-import com.loguito.brainmove.models.remote.Measurement
+import com.loguito.brainmove.models.remote.TrendMeasure
 import kotlinx.android.synthetic.main.widget_trend_chart.view.*
+import java.text.DecimalFormat
 
 class TrendChartWidget @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    var measurements: ArrayList<Measurement> = ArrayList()
+    var trendMeasures: List<TrendMeasure> = ArrayList()
         set(value) {
             field = value
             val values: ArrayList<Entry> = ArrayList()
-            for ((index, value) in value.withIndex()) {
-                values.add(Entry((index + 1).toFloat(), value.measure))
+            for ((index, measureValue) in value.withIndex()) {
+                values.add(Entry((index + 1).toFloat(), measureValue.measure.toFloat(), null, measureValue.suffix))
             }
             val set1 = LineDataSet(values, "")
             set1.toAppStyle(context)
             val data = LineData(set1)
-            data.setValueFormatter(WeightFormatter())
             data.toAppStyle(context)
             lineChart.toAppStyle()
             lineChart.data = data
+            lineChart.xAxis.spaceMax = 0.1f
+            lineChart.invalidate()
+            titleContainer.visibility = View.INVISIBLE
+        }
+
+    var valueFormatter: ValueFormatter? = null
+        set(value) {
+            field = value
+            lineChart.data.setValueFormatter(value)
+            lineChart.invalidate()
         }
 
     var trendTitle: String = String()
@@ -50,8 +60,9 @@ class TrendChartWidget @JvmOverloads constructor(
 
             override fun onValueSelected(entry: Entry?, h: Highlight?) {
                 titleContainer.visibility = View.VISIBLE
-                titleTextView.text = String.format("%s kg", entry?.y.toString())
-                detailTextView.text = measurements[entry?.x?.toInt() ?: 0].date
+                val formatter = DecimalFormat("#.##")
+                titleTextView.text = String.format("%s%s", formatter.format(entry?.y?.toDouble()), entry?.data.toString())
+                detailTextView.text = trendMeasures[entry?.x?.toInt()?.minus(1) ?: 0].date
             }
         })
     }

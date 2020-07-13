@@ -8,27 +8,35 @@
 
     <TextView
         android:id="@+id/measurementNameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/black"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_primary_color_drawable"
+        android:backgroundTint="#f39200"
+        android:gravity="center"
+        android:paddingStart="40dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="40dp"
+        android:paddingBottom="8dp"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:minWidth="220dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Peso" />
+        tools:text="Peso corporal sin grasa" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/titleContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:visibility="invisible"
         app:cardBackgroundColor="@color/colorSecondary"
         app:cardCornerRadius="8dp"
-        app:contentPadding="16dp"
+        app:contentPadding="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/measurementNameTextView">
@@ -45,7 +53,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 tools:text="78.5 kg" />
 
@@ -54,8 +62,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/black"
-                tools:text="15/05/2020" />
+                android:textColor="@color/white"
+                android:maxWidth="100dp"
+                tools:text="10/01/2020" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

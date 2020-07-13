@@ -24,4 +24,5 @@ fun LineChart.toAppStyle() {
     this.setDrawBorders(false)
     this.description.isEnabled = false
     this.legend.isEnabled = false
+    this.setScaleEnabled(false);
 }

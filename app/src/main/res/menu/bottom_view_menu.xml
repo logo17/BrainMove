@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/reservationsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_appointment_black"
+        android:title="@string/reservation_bottom_text" />
+    <item
         android:id="@+id/measurementsFragment"
         android:enabled="true"
         android:icon="@drawable/ic_appointments"
@@ -11,7 +16,7 @@
         android:icon="@drawable/ic_measurements"
         android:title="@string/trends_bottom_text" />
     <item
-        android:id="@+id/workoutsFragment"
+        android:id="@+id/planFragment"
         android:enabled="true"
         android:icon="@drawable/ic_workout_plan"
         android:title="@string/plans_bottom_text" />

@@ -1,0 +1,53 @@
+package com.loguito.brainmove.models.remote
+
+import android.os.Parcel
+import android.os.Parcelable
+
+data class User(val fullName: String = "", val email: String = "", val id: String = "", val photoUrl: String = "") :
+    Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: ""
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(fullName)
+        parcel.writeString(email)
+        parcel.writeString(id)
+        parcel.writeString(photoUrl)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as User
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
+    companion object CREATOR : Parcelable.Creator<User> {
+        override fun createFromParcel(parcel: Parcel): User {
+            return User(parcel)
+        }
+
+        override fun newArray(size: Int): Array<User?> {
+            return arrayOfNulls(size)
+        }
+    }
+
+
+}

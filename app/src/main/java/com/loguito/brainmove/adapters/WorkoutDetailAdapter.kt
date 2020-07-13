@@ -3,49 +3,52 @@ package com.loguito.brainmove.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.loguito.brainmove.R
-import com.loguito.brainmove.models.remote.Workout
+import com.loguito.brainmove.models.remote.Exercise
+import com.loguito.brainmove.utils.SingleLiveEvent
 import kotlinx.android.synthetic.main.item_workout_cell.view.*
 
-class WorkoutDetailAdapter : RecyclerView.Adapter<WorkoutDetailAdapter.WorkoutDetailViewHolder>() {
+class WorkoutDetailAdapter : RecyclerView.Adapter<WorkoutDetailAdapter.ExerciseViewHolder>() {
 
-    private val _workoutClicked: MutableLiveData<Workout> = MutableLiveData()
+    private val _exerciseClicked: SingleLiveEvent<Exercise> = SingleLiveEvent()
 
-    val workoutClicked: LiveData<Workout>
-        get() = _workoutClicked
+    val exerciseClicked: SingleLiveEvent<Exercise>
+        get() = _exerciseClicked
 
-    var workoutList: List<Workout> = ArrayList()
+    var exerciseList: List<Exercise> = ArrayList()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutDetailViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_workout_cell, parent, false)
-        return WorkoutDetailViewHolder(view)
+        return ExerciseViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return workoutList.size
+        return exerciseList.size
     }
 
-    override fun onBindViewHolder(holder: WorkoutDetailViewHolder, position: Int) {
-        holder.bind(workoutList[position])
+    override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
+        holder.bind(exerciseList[position])
     }
 
-    inner class WorkoutDetailViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ExerciseViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(workout: Workout) {
+        fun bind(exercise: Exercise) {
             view.setOnClickListener {
-                _workoutClicked.postValue(workout)
+                _exerciseClicked.postValue(exercise)
             }
-            view.workoutTitleTextView.text = workout.name
-            Glide.with(view).load(workout.imageUrl).into(view.workoutImageView)
+            view.workoutTitleTextView.text = exercise.name
+            view.workoutQuantityTextView.text = exercise.quantity
+            Glide.with(view)
+                .load(exercise.backgroundImageUrl)
+                .placeholder(R.drawable.loading_background_placeholder)
+                .into(view.workoutImageView)
         }
     }
 }

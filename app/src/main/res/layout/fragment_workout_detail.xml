@@ -4,7 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragments.WorkoutDetailFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:titleTextColor="@color/white"
+        tools:title="Tabata abdominales" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
@@ -12,88 +27,58 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:foreground="@color/overlay_black"
-                android:scaleType="centerCrop"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/titleContainer"
+                android:layout_width="139dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_title_badge"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:background="@drawable/workout_bg_remove"
-                tools:ignore="ContentDescription" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView2">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/workoutTitleTextView"
-                    android:layout_width="match_parent"
+                    android:id="@+id/blockSubtitle"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
-                    tools:text="Tabata Abdominales" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Series" />
 
                 <TextView
-                    android:id="@+id/workoutDescriptionTextView"
-                    android:layout_width="match_parent"
+                    android:id="@+id/blockSubtitleQuantity"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/white"
-                    tools:text="Fortalece los musculos abdominales al ritmo de las mejores canciones." />
-            </LinearLayout>
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="4" />
 
-            <com.loguito.brainmove.widgets.SingleDetailWidget
-                android:id="@+id/dateView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
-                app:title="@string/date_text"
-                tools:detail="15/05/2020" />
-
-            <com.loguito.brainmove.widgets.SingleDetailWidget
-                android:id="@+id/trainerView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/dateView"
-                app:layout_constraintStart_toStartOf="@+id/dateView"
-                app:layout_constraintTop_toBottomOf="@+id/dateView"
-                app:title="@string/trainer_text"
-                tools:detail="Dulce Urena Madrigal" />
-
-            <com.loguito.brainmove.widgets.SingleDetailWidget
-                android:id="@+id/exercisesView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/trainerView"
-                app:layout_constraintStart_toStartOf="@+id/trainerView"
-                app:layout_constraintTop_toBottomOf="@+id/trainerView"
-                app:title="@string/exercises_text" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="96dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/workoutRecyclerView"
@@ -104,8 +89,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/exercisesView"
-                app:spanCount="2"
+                app:layout_constraintTop_toBottomOf="@+id/titleContainer"
+                app:spanCount="1"
                 tools:itemCount="20"
                 tools:listitem="@layout/item_workout_cell" />
         </androidx.constraintlayout.widget.ConstraintLayout>
