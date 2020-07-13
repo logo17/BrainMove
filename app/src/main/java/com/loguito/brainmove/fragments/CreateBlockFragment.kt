@@ -25,6 +25,7 @@ import com.loguito.brainmove.ext.showLoadingSpinner
 import com.loguito.brainmove.utils.Constants
 import com.loguito.brainmove.viewmodels.CreateBlockViewModel
 import com.loguito.brainmove.viewmodels.CreateRoutineViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_create_block.*
 import java.util.concurrent.TimeUnit
 
@@ -136,6 +137,7 @@ class CreateBlockFragment : Fragment() {
                 android.R.layout.simple_spinner_dropdown_item, it
             )
             unitMeasureDropdown.adapter = adapter
+            unitMeasureDropdown.setSelection(0)
         })
 
         viewModel.workoutUnitMeasures.observe(viewLifecycleOwner, Observer {
@@ -152,7 +154,11 @@ class CreateBlockFragment : Fragment() {
         searchEditText.textChanges()
             .skipInitialValue()
             .debounce(Constants.DEBOUNCE_DURATION, TimeUnit.MILLISECONDS)
-            .subscribe { viewModel.getExerciseByKeyword(it.toString()) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                adapter.filter.filter(it.toString())
+            }
 
         blockNameEditText.textChanges()
             .skipInitialValue()

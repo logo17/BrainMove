@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.loguito.brainmove.R
 import com.loguito.brainmove.models.remote.Block
 import com.loguito.brainmove.models.remote.BlockImage
 import com.loguito.brainmove.models.remote.Exercise
 import com.loguito.brainmove.models.remote.UnitMeasure
-import java.util.*
 
 class CreateBlockViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
@@ -52,49 +52,8 @@ class CreateBlockViewModel : ViewModel() {
 
     init {
         _loadingVisibility.postValue(true)
-        db.collection("block_unit_measure")
-            .get()
-            .addOnSuccessListener { result ->
-                if (result.isEmpty) {
-                    _blockUnitMeasures.postValue(emptyList())
-                } else {
-                    _blockUnitMeasures.postValue(result.toObjects(UnitMeasure::class.java))
-                }
-                db.collection("workout_unit_measure")
-                    .get()
-                    .addOnSuccessListener { result ->
-                        _loadingVisibility.postValue(false)
-                        if (result.isEmpty) {
-                            _workoutUnitMeasures.postValue(emptyList())
-                        } else {
-                            _workoutUnitMeasures.postValue(result.toObjects(UnitMeasure::class.java))
-                        }
-                    }
-                    .addOnFailureListener {
-                        _loadingVisibility.postValue(false)
-                        _exerciseError.postValue(R.string.retrieve_workout_measure_error)
-                    }
-            }
-            .addOnFailureListener {
-                _loadingVisibility.postValue(false)
-                _exerciseError.postValue(R.string.retrieve_block_measure_error)
-            }
-
-        db.collection("block_images")
-            .get()
-            .addOnSuccessListener { result ->
-                _blockImageList.postValue(result.toObjects(BlockImage::class.java))
-            }
-            .addOnFailureListener {
-                _blockImageList.postValue(emptyList())
-            }
-    }
-
-    fun getExerciseByKeyword(keyWord: String) {
-        _loadingVisibility.postValue(true)
         db.collection("exercise")
-            .limit(10)
-            .whereArrayContains("keywords", keyWord.toLowerCase(Locale.getDefault()))
+            .orderBy("name", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { result ->
                 _loadingVisibility.postValue(false)
@@ -108,6 +67,41 @@ class CreateBlockViewModel : ViewModel() {
                 _loadingVisibility.postValue(false)
                 _exerciseError.postValue(R.string.retrieve_plan_error)
             }
+
+        db.collection("block_unit_measure")
+            .get()
+            .addOnSuccessListener { result ->
+                if (result.isEmpty) {
+                    _blockUnitMeasures.postValue(emptyList())
+                } else {
+                    _blockUnitMeasures.postValue(result.toObjects(UnitMeasure::class.java))
+                }
+                db.collection("workout_unit_measure")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        if (result.isEmpty) {
+                            _workoutUnitMeasures.postValue(emptyList())
+                        } else {
+                            _workoutUnitMeasures.postValue(result.toObjects(UnitMeasure::class.java))
+                        }
+                    }
+                    .addOnFailureListener {
+                        _exerciseError.postValue(R.string.retrieve_workout_measure_error)
+                    }
+            }
+            .addOnFailureListener {
+                _exerciseError.postValue(R.string.retrieve_block_measure_error)
+            }
+
+        db.collection("block_images")
+            .orderBy("name", Query.Direction.ASCENDING)
+            .get()
+            .addOnSuccessListener { result ->
+                _blockImageList.postValue(result.toObjects(BlockImage::class.java))
+            }
+            .addOnFailureListener {
+                _blockImageList.postValue(emptyList())
+            }
     }
 
     fun validateBlockName(name: String) {
@@ -117,7 +111,6 @@ class CreateBlockViewModel : ViewModel() {
 
     fun validateBlockDescription(description: String) {
         blockDescription = description
-        validateFields()
     }
 
     fun validateBlockDuration(duration: String) {
@@ -154,7 +147,7 @@ class CreateBlockViewModel : ViewModel() {
     }
 
     private fun validateFields() {
-        _areValidFields.postValue(blockName.isNotEmpty() && blockDescription.isNotEmpty() && blockDuration.isNotEmpty() && blockUnitMeasure.isNotEmpty() && blockBackgroundImageUrl.isNotEmpty() && (exerciseList.isNotEmpty() && exerciseList.any {
+        _areValidFields.postValue(blockName.isNotEmpty() && blockDuration.isNotEmpty() && blockUnitMeasure.isNotEmpty() && blockBackgroundImageUrl.isNotEmpty() && (exerciseList.isNotEmpty() && exerciseList.any {
             it.quantity.split(
                 " "
             )[0].equals("0")
