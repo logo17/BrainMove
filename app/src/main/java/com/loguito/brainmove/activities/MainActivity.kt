@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     MeasurementOption.METABOLICAL_AGE -> measureModel.metabolical_age = value
                 }
             } else {
-                val format = SimpleDateFormat("MMM d, yyyy HH:mm:ss a", Locale.getDefault())
+                val format = SimpleDateFormat("MMM d, yyyy HH:mm:ss a", Locale.US)
                 measureModel.date = format.parse(measure) ?: Date()
             }
         }

@@ -65,7 +65,7 @@ class AdminCreateReservationViewModel : ViewModel() {
 
     private fun getDateFromStrings(date: String, hour: String): Date {
         val dateAsString = String.format("%s %s", date, hour)
-        val formatter = SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault())
+        val formatter = SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.US)
         return formatter.parse(dateAsString) ?: Date()
     }
 }

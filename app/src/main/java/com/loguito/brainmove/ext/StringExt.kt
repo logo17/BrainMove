@@ -12,6 +12,6 @@ fun CharSequence.isValidPassword() = !isNullOrEmpty() && length >= 6
 fun CharSequence.isValidName() = !isNullOrEmpty()
 
 fun String.shorDateStringToDate(): Date {
-    val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.US)
     return formatter.parse(this) ?: Date()
 }
