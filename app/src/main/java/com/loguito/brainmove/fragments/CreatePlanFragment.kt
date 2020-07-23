@@ -30,7 +30,7 @@ class CreatePlanFragment : Fragment() {
 
     val viewModel: CreatePlanViewModel by navGraphViewModels(R.id.create_plan_navigation)
 
-    val adapter = AdminRoutineAdapter()
+    val adapter = AdminRoutineAdapter(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,9 +58,15 @@ class CreatePlanFragment : Fragment() {
     }
 
     private fun observeData() {
-        adapter.selectedRoutine.observe(
+        adapter.modifyRoutine.observe(
             viewLifecycleOwner,
             Observer { navigateToCreateRoutineFragment(it.second, it.first) })
+
+        adapter.removeRoutine.observe(
+            viewLifecycleOwner,
+            Observer {
+                viewModel.removeRoutineFromList(it)
+            })
 
         viewModel.routines.observe(viewLifecycleOwner, Observer {
             routinesEmptyListWidget.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE

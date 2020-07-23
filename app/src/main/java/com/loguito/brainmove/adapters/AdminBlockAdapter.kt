@@ -1,5 +1,6 @@
 package com.loguito.brainmove.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,13 +8,17 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jakewharton.rxbinding3.view.clicks
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.decorator.DividerItemDecorator
 import com.loguito.brainmove.models.remote.Block
+import com.loguito.brainmove.utils.Constants
 import com.loguito.brainmove.utils.SingleLiveEvent
 import kotlinx.android.synthetic.main.admin_block_item_cell.view.*
+import java.util.concurrent.TimeUnit
 
-class AdminBlockAdapter : RecyclerView.Adapter<AdminBlockAdapter.AdminBlockViewHolder>() {
+class AdminBlockAdapter(val enableControlButtons: Boolean = false) :
+    RecyclerView.Adapter<AdminBlockAdapter.AdminBlockViewHolder>() {
 
     var blocks: List<Block> = ArrayList()
         set(value) {
@@ -21,10 +26,13 @@ class AdminBlockAdapter : RecyclerView.Adapter<AdminBlockAdapter.AdminBlockViewH
             notifyDataSetChanged()
         }
 
-    private val _selectedBlock = SingleLiveEvent<Pair<Int, Block>>()
+    private val _modifyBlock = SingleLiveEvent<Pair<Int, Block>>()
+    private val _removeBlock = SingleLiveEvent<Int>()
 
-    val selectedBlock: LiveData<Pair<Int, Block>>
-        get() = _selectedBlock
+    val modifyBlock: LiveData<Pair<Int, Block>>
+        get() = _modifyBlock
+    val removeBlock: LiveData<Int>
+        get() = _removeBlock
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminBlockViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -39,12 +47,26 @@ class AdminBlockAdapter : RecyclerView.Adapter<AdminBlockAdapter.AdminBlockViewH
     }
 
     inner class AdminBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("CheckResult")
         fun bind(block: Block) {
             val adapter = AdminExerciseAdapter()
 
-            itemView.setOnClickListener {
-                _selectedBlock.postValue(Pair(adapterPosition, block))
-            }
+            itemView.removeExerciseButton.visibility =
+                if (enableControlButtons) View.VISIBLE else View.GONE
+            itemView.modifyExerciseButton.visibility =
+                if (enableControlButtons) View.VISIBLE else View.GONE
+
+            itemView.modifyExerciseButton.clicks()
+                .throttleFirst(Constants.THROTTLE_FIRST_DURATION, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    _modifyBlock.postValue(Pair(adapterPosition, block))
+                }
+
+            itemView.removeExerciseButton.clicks()
+                .throttleFirst(Constants.THROTTLE_FIRST_DURATION, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    _removeBlock.postValue(adapterPosition)
+                }
 
             itemView.blockNameTextView.text = block.name
             itemView.blockDurationTextView.text = String.format("%d %s", block.duration, block.unit)

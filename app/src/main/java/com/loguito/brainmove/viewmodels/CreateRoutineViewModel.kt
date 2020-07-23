@@ -47,11 +47,19 @@ class CreateRoutineViewModel : ViewModel() {
             blockList.add(block.copy())
         }
         _blocks.postValue(blockList)
+        validateFields()
     }
 
     fun addBlocksToList(blocks: List<Block>) {
         blockList.addAll(blocks)
         _blocks.postValue(blockList)
+        validateFields()
+    }
+
+    fun removeBlockFromList(index: Int) {
+        blockList.removeAt(index)
+        _blocks.postValue(blockList)
+        validateFields()
     }
 
     private fun validateFields() {

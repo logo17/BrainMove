@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.UserAdapter
@@ -25,6 +26,7 @@ import com.loguito.brainmove.ext.showLoadingSpinner
 import com.loguito.brainmove.models.remote.Measure
 import com.loguito.brainmove.utils.Constants
 import com.loguito.brainmove.viewmodels.UserListViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_generic_user_list.*
 import java.util.concurrent.TimeUnit
 
@@ -109,6 +111,15 @@ class AddMeasureUserSelectionFragment : Fragment() {
         searchUserEditText.textChanges()
             .skipInitialValue()
             .debounce(Constants.DEBOUNCE_DURATION, TimeUnit.MILLISECONDS)
-            .subscribe { viewModel.getUserByKeyword(it.toString()) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                searchButton.isEnabled = it.isNotEmpty()
+            }
+
+        searchButton.clicks()
+            .throttleFirst(Constants.THROTTLE_FIRST_DURATION, TimeUnit.MILLISECONDS)
+            .subscribe {
+                viewModel.getUserByKeyword(searchUserEditText.text.toString())
+            }
     }
 }

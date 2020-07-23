@@ -1,5 +1,6 @@
 package com.loguito.brainmove.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,14 +8,18 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jakewharton.rxbinding3.view.clicks
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.decorator.DividerItemDecorator
 import com.loguito.brainmove.adapters.decorator.VerticalSpaceItemDecoration
 import com.loguito.brainmove.models.remote.Routine
+import com.loguito.brainmove.utils.Constants
 import com.loguito.brainmove.utils.SingleLiveEvent
 import kotlinx.android.synthetic.main.admin_routine_item_cell.view.*
+import java.util.concurrent.TimeUnit
 
-class AdminRoutineAdapter : RecyclerView.Adapter<AdminRoutineAdapter.AdminRoutineViewHolder>() {
+class AdminRoutineAdapter(val enableControlButtons: Boolean = false) :
+    RecyclerView.Adapter<AdminRoutineAdapter.AdminRoutineViewHolder>() {
 
     var routines: List<Routine> = ArrayList()
         set(value) {
@@ -22,10 +27,13 @@ class AdminRoutineAdapter : RecyclerView.Adapter<AdminRoutineAdapter.AdminRoutin
             notifyDataSetChanged()
         }
 
-    private val _selectedRoutine = SingleLiveEvent<Pair<Int, Routine>>()
+    private val _modifyRoutine = SingleLiveEvent<Pair<Int, Routine>>()
+    private val _removeRoutine = SingleLiveEvent<Int>()
 
-    val selectedRoutine: LiveData<Pair<Int, Routine>>
-        get() = _selectedRoutine
+    val modifyRoutine: LiveData<Pair<Int, Routine>>
+        get() = _modifyRoutine
+    val removeRoutine: LiveData<Int>
+        get() = _removeRoutine
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminRoutineViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -40,13 +48,27 @@ class AdminRoutineAdapter : RecyclerView.Adapter<AdminRoutineAdapter.AdminRoutin
     }
 
     inner class AdminRoutineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("CheckResult")
         fun bind(routine: Routine) {
             val adapter = AdminBlockAdapter()
-            itemView.setOnClickListener {
-                _selectedRoutine.postValue(Pair(adapterPosition, routine))
-            }
+            itemView.removeExerciseButton.visibility =
+                if (enableControlButtons) View.VISIBLE else View.GONE
+            itemView.modifyExerciseButton.visibility =
+                if (enableControlButtons) View.VISIBLE else View.GONE
+
+            itemView.modifyExerciseButton.clicks()
+                .throttleFirst(Constants.THROTTLE_FIRST_DURATION, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    _modifyRoutine.postValue(Pair(adapterPosition, routine))
+                }
+
+            itemView.removeExerciseButton.clicks()
+                .throttleFirst(Constants.THROTTLE_FIRST_DURATION, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    _removeRoutine.postValue(adapterPosition)
+                }
             itemView.routineNameTextView.text = routine.name
-            itemView.routineNumberTextView.text = "${routine.routineNumber}"
+//            itemView.routineNumberTextView.text = "${routine.routineNumber}"
             itemView.blocksRecyclerView.layoutManager = LinearLayoutManager(itemView.context)
             itemView.blocksRecyclerView.adapter = adapter
             ContextCompat.getDrawable(itemView.context, R.drawable.divider_item_bg)?.let {

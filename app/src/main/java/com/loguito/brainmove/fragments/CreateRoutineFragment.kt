@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_create_routine.*
 import java.util.concurrent.TimeUnit
 
 class CreateRoutineFragment : Fragment() {
-    private val adapter = AdminBlockAdapter()
+    private val adapter = AdminBlockAdapter(true)
     val viewModel: CreateRoutineViewModel by navGraphViewModels(R.id.create_routine_navigation)
     val sharedViewModel: CreatePlanViewModel by navGraphViewModels(R.id.create_plan_navigation)
     private val args: CreateRoutineFragmentArgs by navArgs()
@@ -57,9 +57,15 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun observeData() {
-        adapter.selectedBlock.observe(
+        adapter.modifyBlock.observe(
             viewLifecycleOwner,
             Observer { navigateToCreateBlockFragment(it.first, it.second) })
+
+        adapter.removeBlock.observe(
+            viewLifecycleOwner,
+            Observer {
+                viewModel.removeBlockFromList(it)
+            })
 
         viewModel.blocks.observe(viewLifecycleOwner, Observer {
             blocksEmptyListWidget.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE

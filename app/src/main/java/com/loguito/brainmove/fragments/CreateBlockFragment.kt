@@ -222,7 +222,6 @@ class CreateBlockFragment : Fragment() {
             .subscribe { viewModel.blockDuration = it.toString() }
 
         unitMeasureDropdown.itemSelections()
-            .throttleFirst(Constants.THROTTLE_FIRST_DURATION, TimeUnit.MILLISECONDS)
             .filter { unitMeasureDropdown.adapter != null }
             .subscribe {
                 viewModel.blockUnitMeasure = unitMeasureDropdown.adapter.getItem(it).toString()

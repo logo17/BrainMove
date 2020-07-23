@@ -56,11 +56,19 @@ class CreatePlanViewModel : ViewModel() {
             routineList.add(routine.copy())
         }
         _routines.postValue(routineList)
+        validateFields()
     }
 
     fun addRoutinesToList(routines: List<Routine>) {
         routineList.addAll(routines)
         _routines.postValue(routineList)
+        validateFields()
+    }
+
+    fun removeRoutineFromList(index: Int) {
+        routineList.removeAt(index)
+        _routines.postValue(routineList)
+        validateFields()
     }
 
     fun validateDates(fromDate: Date?, toDate: Date?) {
@@ -85,14 +93,16 @@ class CreatePlanViewModel : ViewModel() {
     fun updatePlan(userId: String, planId: String) {
         _loadingVisibility.postValue(true)
         db.collection("plan").document(planId)
-            .set(Plan(
-                userId,
-                planName,
-                planGoal,
-                toDate ?: Date(),
-                fromDate ?: Date(),
-                routineList
-            ))
+            .set(
+                Plan(
+                    userId,
+                    planName,
+                    planGoal,
+                    toDate ?: Date(),
+                    fromDate ?: Date(),
+                    routineList
+                )
+            )
             .addOnCompleteListener {
                 _loadingVisibility.postValue(false)
                 _savePlanResponse.postValue(it.isSuccessful)
