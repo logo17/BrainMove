@@ -13,22 +13,53 @@ import com.loguito.brainmove.models.remote.UnitMeasure
 
 class CreateBlockViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
+    var listIndex = -1
 
-    private var blockName: String = ""
-    private var blockDescription: String = ""
-    private var blockDuration: String = ""
-    private var blockUnitMeasure: String = ""
-    private var blockBackgroundImageUrl: String = ""
+    var blockName: String = ""
+        set(value) {
+            field = value
+            validateFields()
+        }
+
+    var blockDescription: String = ""
+        set(value) {
+            field = value
+            validateFields()
+        }
+
+    var blockDuration: String = ""
+        set(value) {
+            field = value
+            validateFields()
+        }
+
+    var blockUnitMeasure: String = ""
+        set(value) {
+            field = value
+            validateFields()
+        }
+
+    var blockBackgroundImageUrl: String = ""
+        set(value) {
+            field = value
+            validateFields()
+        }
+
     private var exerciseList = mutableListOf<Exercise>()
+    var unitMeasures = mutableListOf<UnitMeasure>()
+
+    // Inputs
+    private var _blockNameInput = MutableLiveData<String>()
+    private var _blockDescriptionInput = MutableLiveData<String>()
+    private var _blockDurationInput = MutableLiveData<String>()
 
     private var _exercises = MutableLiveData<List<Exercise>>()
-    private var _block = MutableLiveData<Block>()
+    private var _block = MutableLiveData<Pair<Int, Block>>()
     private var _selectedExercises = MutableLiveData<List<Exercise>>()
     private var _exerciseError = MutableLiveData<Int>()
     private var _loadingVisibility = MutableLiveData<Boolean>()
     private var _areValidFields = MutableLiveData<Boolean>()
     private var _blockUnitMeasures = MutableLiveData<List<UnitMeasure>>()
-    private var _workoutUnitMeasures = MutableLiveData<List<UnitMeasure>>()
     private var _blockImageList = MutableLiveData<List<BlockImage>>()
 
     val exercises: LiveData<List<Exercise>>
@@ -41,14 +72,19 @@ class CreateBlockViewModel : ViewModel() {
         get() = _loadingVisibility
     val areValidFields: LiveData<Boolean>
         get() = _areValidFields
-    val block: LiveData<Block>
+    val block: LiveData<Pair<Int, Block>>
         get() = _block
     val blockUnitMeasures: LiveData<List<UnitMeasure>>
         get() = _blockUnitMeasures
-    val workoutUnitMeasures: LiveData<List<UnitMeasure>>
-        get() = _workoutUnitMeasures
     val blockImageList: LiveData<List<BlockImage>>
         get() = _blockImageList
+
+    val blockNameOutput: LiveData<String>
+        get() = _blockNameInput
+    val blockDescriptionOutput: LiveData<String>
+        get() = _blockDescriptionInput
+    val blockDurationOutput: LiveData<String>
+        get() = _blockDurationInput
 
     init {
         _loadingVisibility.postValue(true)
@@ -79,10 +115,8 @@ class CreateBlockViewModel : ViewModel() {
                 db.collection("workout_unit_measure")
                     .get()
                     .addOnSuccessListener { result ->
-                        if (result.isEmpty) {
-                            _workoutUnitMeasures.postValue(emptyList())
-                        } else {
-                            _workoutUnitMeasures.postValue(result.toObjects(UnitMeasure::class.java))
+                        if (!result.isEmpty) {
+                            unitMeasures = result.toObjects(UnitMeasure::class.java)
                         }
                     }
                     .addOnFailureListener {
@@ -104,33 +138,14 @@ class CreateBlockViewModel : ViewModel() {
             }
     }
 
-    fun validateBlockName(name: String) {
-        blockName = name
-        validateFields()
-    }
-
-    fun validateBlockDescription(description: String) {
-        blockDescription = description
-    }
-
-    fun validateBlockDuration(duration: String) {
-        blockDuration = duration
-        validateFields()
-    }
-
-
-    fun validateBlockUnitMeasure(unitMeasure: String) {
-        blockUnitMeasure = unitMeasure
-        validateFields()
-    }
-
-    fun validateBlockBackgroundImageUrl(url: String) {
-        blockBackgroundImageUrl = url
-        validateFields()
-    }
-
     fun addExerciseToBlock(exercise: Exercise) {
         exerciseList.add(exercise)
+        _selectedExercises.postValue(exerciseList)
+        validateFields()
+    }
+
+    fun addExercisesToBlock(exercises: List<Exercise>) {
+        exerciseList.addAll(exercises)
         _selectedExercises.postValue(exerciseList)
         validateFields()
     }
@@ -155,15 +170,30 @@ class CreateBlockViewModel : ViewModel() {
             .not()))
     }
 
+    fun setBlockNameInput(name: String) {
+        _blockNameInput.postValue(name)
+    }
+
+    fun setBlockDescriptionInput(description: String) {
+        _blockDescriptionInput.postValue(description)
+    }
+
+    fun setBlockDurationInput(duration: String) {
+        _blockDurationInput.postValue(duration)
+    }
+
     fun createBlockObject() {
         _block.postValue(
-            Block(
-                blockDescription,
-                blockUnitMeasure,
-                blockDuration.toInt(),
-                blockBackgroundImageUrl,
-                blockName,
-                exerciseList.toMutableList()
+            Pair(
+                listIndex,
+                Block(
+                    blockDescription,
+                    blockUnitMeasure,
+                    blockDuration.toInt(),
+                    blockBackgroundImageUrl,
+                    blockName,
+                    exerciseList.toMutableList()
+                )
             )
         )
     }

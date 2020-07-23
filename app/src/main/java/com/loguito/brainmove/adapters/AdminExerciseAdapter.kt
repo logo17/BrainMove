@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.loguito.brainmove.R
 import com.loguito.brainmove.models.remote.Exercise
+import com.loguito.brainmove.utils.SingleLiveEvent
 import kotlinx.android.synthetic.main.admin_exercise_item_cell.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 class AdminExerciseAdapter : RecyclerView.Adapter<AdminExerciseAdapter.AdminExerciseViewHolder>(),
     Filterable {
 
-    private val _selectedOption = MutableLiveData<Exercise>()
+    private val _selectedOption = SingleLiveEvent<Exercise>()
     var searchableList: MutableList<Exercise> = arrayListOf()
 
     val selectedOption: LiveData<Exercise>
@@ -46,7 +46,9 @@ class AdminExerciseAdapter : RecyclerView.Adapter<AdminExerciseAdapter.AdminExer
         fun bind(exercise: Exercise) {
             val quantityAsText = "${exercise.quantity} - "
             itemView.exerciseNameTextView.text = "${quantityAsText}${exercise.name}"
-            itemView.setOnClickListener { _selectedOption.postValue(exercise) }
+            itemView.setOnClickListener {
+                _selectedOption.postValue(exercise)
+            }
         }
     }
 

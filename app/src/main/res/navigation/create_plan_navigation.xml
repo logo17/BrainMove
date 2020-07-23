@@ -13,13 +13,30 @@
         <argument
             android:name="userId"
             app:argType="string" />
+        <argument
+            android:name="planId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="plan"
+            app:argType="com.loguito.brainmove.models.remote.Plan"
+            app:nullable="true" />
         <action
             android:id="@+id/action_createPlanFragment_to_create_routine_navigation"
             app:destination="@id/create_routine_navigation"
             app:enterAnim="@anim/slide_left"
             app:exitAnim="@anim/wait_anim"
             app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right" />
+            app:popExitAnim="@anim/slide_right">
+            <argument
+                android:name="routine"
+                app:argType="com.loguito.brainmove.models.remote.Routine"
+                app:nullable="true" />
+            <argument
+                android:name="routineIndex"
+                app:argType="integer"
+                android:defaultValue="-1" />
+        </action>
     </fragment>
     <include app:graph="@navigation/create_routine_navigation" />
 </navigation>

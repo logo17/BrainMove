@@ -17,6 +17,8 @@ class UserDetailsPlanViewModel : ViewModel() {
     private var _planError = MutableLiveData<Int>()
     private var _loadingVisibility = MutableLiveData<Boolean>()
 
+    var planId = ""
+
     val plan: LiveData<Plan?>
         get() = _plan
     val planError: LiveData<Int>
@@ -38,6 +40,7 @@ class UserDetailsPlanViewModel : ViewModel() {
                     _plan.postValue(null)
                 } else {
                     for (document in result) {
+                        planId = document.id
                         _plan.postValue(document.toObject(Plan::class.java))
                     }
                 }

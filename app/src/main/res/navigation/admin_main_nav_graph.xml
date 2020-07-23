@@ -60,6 +60,14 @@
             <argument
                 android:name="userId"
                 app:argType="string" />
+            <argument
+                android:name="planId"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="plan"
+                app:argType="com.loguito.brainmove.models.remote.Plan"
+                app:nullable="true" />
         </action>
         <action
             android:id="@+id/action_userDetailFragment_to_reviewUserMeasureFragment"

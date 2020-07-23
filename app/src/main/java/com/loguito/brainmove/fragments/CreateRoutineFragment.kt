@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.jakewharton.rxbinding3.widget.textChanges
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.AdminBlockAdapter
 import com.loguito.brainmove.ext.navigateBack
+import com.loguito.brainmove.models.remote.Block
 import com.loguito.brainmove.utils.Constants
 import com.loguito.brainmove.viewmodels.CreatePlanViewModel
 import com.loguito.brainmove.viewmodels.CreateRoutineViewModel
@@ -25,6 +27,18 @@ class CreateRoutineFragment : Fragment() {
     private val adapter = AdminBlockAdapter()
     val viewModel: CreateRoutineViewModel by navGraphViewModels(R.id.create_routine_navigation)
     val sharedViewModel: CreatePlanViewModel by navGraphViewModels(R.id.create_plan_navigation)
+    private val args: CreateRoutineFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.listIndex = args.routineIndex
+        args.routine?.let {
+            viewModel.setRoutineNameInput(it.name)
+            viewModel.setRoutineNumberInput(it.routineNumber)
+            viewModel.addBlocksToList(it.blocks)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +57,10 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun observeData() {
+        adapter.selectedBlock.observe(
+            viewLifecycleOwner,
+            Observer { navigateToCreateBlockFragment(it.first, it.second) })
+
         viewModel.blocks.observe(viewLifecycleOwner, Observer {
             blocksEmptyListWidget.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             blocksRecyclerView.visibility = if (it.isEmpty().not()) View.VISIBLE else View.GONE
@@ -54,9 +72,17 @@ class CreateRoutineFragment : Fragment() {
         })
 
         viewModel.routine.observe(viewLifecycleOwner, Observer {
-            sharedViewModel.addRoutineToList(it)
+            sharedViewModel.addRoutineToList(it.first, it.second)
             navigateBack()
         })
+
+        viewModel.routineNameOutput.observe(
+            viewLifecycleOwner,
+            Observer { routineNameEditText.setText(it) })
+
+        viewModel.routineNumberOutput.observe(
+            viewLifecycleOwner,
+            Observer { routineNumberEditText.setText(it.toString()) })
     }
 
     private fun initViews() {
@@ -69,11 +95,7 @@ class CreateRoutineFragment : Fragment() {
         )
         blocksRecyclerView.adapter = adapter
 
-        addBlockButton.setOnClickListener {
-            val action =
-                CreateRoutineFragmentDirections.actionCreateRoutineFragmentToCreateBlockFragment()
-            findNavController().navigate(action)
-        }
+        addBlockButton.setOnClickListener { navigateToCreateBlockFragment() }
         toolbar.setNavigationOnClickListener {
             navigateBack()
         }
@@ -85,20 +107,27 @@ class CreateRoutineFragment : Fragment() {
         }
     }
 
+    private fun navigateToCreateBlockFragment(index: Int = -1, block: Block? = null) {
+        val action =
+            CreateRoutineFragmentDirections.actionCreateRoutineFragmentToCreateExerciseNavigation(
+                index,
+                block
+            )
+        findNavController().navigate(action)
+    }
+
     @SuppressLint("CheckResult")
     private fun bindListeners() {
         routineNameEditText.textChanges()
             .skipInitialValue()
             .debounce(Constants.DEBOUNCE_DURATION, TimeUnit.MILLISECONDS)
-            .subscribe { viewModel.validateRoutineName(it.toString()) }
+            .subscribe { viewModel.routineName = it.toString() }
 
         routineNumberEditText.textChanges()
             .skipInitialValue()
             .debounce(Constants.DEBOUNCE_DURATION, TimeUnit.MILLISECONDS)
             .subscribe {
-                viewModel.validateRoutineNumber(
-                    if (it.isEmpty()) 0 else it.toString().toInt()
-                )
+                viewModel.routineNumber = if (it.isEmpty()) 0 else it.toString().toInt()
             }
     }
 }

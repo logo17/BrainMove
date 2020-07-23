@@ -162,4 +162,12 @@
     <string name="remove_session_success">Se ha eliminado la sesión correctamente.</string>
     <string name="remove_session_error">Ha ocurrido un error al eliminar la sesión.</string>
     <string name="category_text">Categoría</string>
+    <string name="modify_plan_text">Modificar plan</string>
+    <string name="quantity_label_text">Cantidad:</string>
+    <string name="background_image_label">Imagen de fondo:</string>
+    <string name="demo_image_label">Demostración:</string>
+    <string name="additional_info_text">Notas o información adicional</string>
+    <string name="add_text">Agregar</string>
+    <string name="delete_text">Eliminar</string>
+    <string name="modify_text">Modificar</string>
 </resources>

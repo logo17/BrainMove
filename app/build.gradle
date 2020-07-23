@@ -10,7 +10,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.loguito.brainmove"
+        applicationId "com.brainmove.android"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 2

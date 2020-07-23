@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.decorator.DividerItemDecorator
 import com.loguito.brainmove.adapters.decorator.VerticalSpaceItemDecoration
 import com.loguito.brainmove.models.remote.Routine
+import com.loguito.brainmove.utils.SingleLiveEvent
 import kotlinx.android.synthetic.main.admin_routine_item_cell.view.*
 
 class AdminRoutineAdapter : RecyclerView.Adapter<AdminRoutineAdapter.AdminRoutineViewHolder>() {
@@ -20,6 +21,11 @@ class AdminRoutineAdapter : RecyclerView.Adapter<AdminRoutineAdapter.AdminRoutin
             field = value
             notifyDataSetChanged()
         }
+
+    private val _selectedRoutine = SingleLiveEvent<Pair<Int, Routine>>()
+
+    val selectedRoutine: LiveData<Pair<Int, Routine>>
+        get() = _selectedRoutine
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminRoutineViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -36,7 +42,9 @@ class AdminRoutineAdapter : RecyclerView.Adapter<AdminRoutineAdapter.AdminRoutin
     inner class AdminRoutineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(routine: Routine) {
             val adapter = AdminBlockAdapter()
-
+            itemView.setOnClickListener {
+                _selectedRoutine.postValue(Pair(adapterPosition, routine))
+            }
             itemView.routineNameTextView.text = routine.name
             itemView.routineNumberTextView.text = "${routine.routineNumber}"
             itemView.blocksRecyclerView.layoutManager = LinearLayoutManager(itemView.context)

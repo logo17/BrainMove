@@ -81,9 +81,11 @@ class UserDetailsPlanFragment : Fragment() {
         viewModel.plan.observe(viewLifecycleOwner,
             Observer {
                 dataContainer.visibility = if (it == null) View.GONE else View.VISIBLE
+                emptyImageView.visibility = if (it == null) View.VISIBLE else View.GONE
                 if (it == null) {
                     planNameTextView.text = getString(R.string.no_plans_text)
                 } else {
+                    addPlanButton.text = getString(R.string.modify_plan_text)
                     fillPlanData(it)
                 }
             })
@@ -95,6 +97,7 @@ class UserDetailsPlanFragment : Fragment() {
     }
 
     private fun fillPlanData(plan: Plan) {
+        imageView2.visibility = View.VISIBLE
         planNameTextView.text = plan.name
         planNameTextView.isSelected = true
         planDateTextView.text =
@@ -109,7 +112,7 @@ class UserDetailsPlanFragment : Fragment() {
             .subscribe {
                 findNavController().navigate(
                     UserDetailFragmentDirections.actionUserDetailFragmentToCreatePlanNavigation(
-                        userId
+                        userId, viewModel.planId, viewModel.plan.value
                     )
                 )
             }

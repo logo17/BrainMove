@@ -47,4 +47,9 @@ class ImageLoaderWidget @JvmOverloads constructor(
             }
             .subscribe()
     }
+
+    fun setSelectedImage(backgroundUrl: String) {
+        val auxImage = BlockImage(imageUrl = backgroundUrl)
+        blockImageDropdown.setSelection(blockImages.indexOf(auxImage))
+    }
 }

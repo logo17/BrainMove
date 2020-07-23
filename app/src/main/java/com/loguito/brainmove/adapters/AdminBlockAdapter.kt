@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.decorator.DividerItemDecorator
 import com.loguito.brainmove.models.remote.Block
+import com.loguito.brainmove.utils.SingleLiveEvent
 import kotlinx.android.synthetic.main.admin_block_item_cell.view.*
 
 class AdminBlockAdapter : RecyclerView.Adapter<AdminBlockAdapter.AdminBlockViewHolder>() {
@@ -19,6 +20,11 @@ class AdminBlockAdapter : RecyclerView.Adapter<AdminBlockAdapter.AdminBlockViewH
             field = value
             notifyDataSetChanged()
         }
+
+    private val _selectedBlock = SingleLiveEvent<Pair<Int, Block>>()
+
+    val selectedBlock: LiveData<Pair<Int, Block>>
+        get() = _selectedBlock
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminBlockViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -35,6 +41,10 @@ class AdminBlockAdapter : RecyclerView.Adapter<AdminBlockAdapter.AdminBlockViewH
     inner class AdminBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(block: Block) {
             val adapter = AdminExerciseAdapter()
+
+            itemView.setOnClickListener {
+                _selectedBlock.postValue(Pair(adapterPosition, block))
+            }
 
             itemView.blockNameTextView.text = block.name
             itemView.blockDurationTextView.text = String.format("%d %s", block.duration, block.unit)

@@ -9,11 +9,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.loguito.brainmove.R
 import com.loguito.brainmove.models.local.TrendOption
+import com.loguito.brainmove.utils.SingleLiveEvent
 import kotlinx.android.synthetic.main.trends_option_cell.view.*
 
 class TrendOptionsAdapter : RecyclerView.Adapter<TrendOptionsAdapter.TrendOptionViewHolder>() {
 
-    private val _selectedOption = MutableLiveData<Int>()
+    private val _selectedOption = SingleLiveEvent<Int>()
 
     val selectedOption: LiveData<Int>
         get() = _selectedOption

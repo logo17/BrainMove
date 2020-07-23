@@ -17,6 +17,7 @@ import com.jakewharton.rxbinding3.widget.textChanges
 import com.loguito.brainmove.R
 import com.loguito.brainmove.adapters.AdminRoutineAdapter
 import com.loguito.brainmove.ext.*
+import com.loguito.brainmove.models.remote.Routine
 import com.loguito.brainmove.utils.Constants
 import com.loguito.brainmove.viewmodels.CreatePlanViewModel
 import com.loguito.brainmove.widgets.OnDialogButtonClicked
@@ -30,6 +31,16 @@ class CreatePlanFragment : Fragment() {
     val viewModel: CreatePlanViewModel by navGraphViewModels(R.id.create_plan_navigation)
 
     val adapter = AdminRoutineAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        args.plan?.let {
+            viewModel.setPlanGoalInput(it.goal)
+            viewModel.setPlanNameInput(it.name)
+            viewModel.validateDates(it.fromDate, it.toDate)
+            viewModel.addRoutinesToList(it.routines)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +58,10 @@ class CreatePlanFragment : Fragment() {
     }
 
     private fun observeData() {
+        adapter.selectedRoutine.observe(
+            viewLifecycleOwner,
+            Observer { navigateToCreateRoutineFragment(it.second, it.first) })
+
         viewModel.routines.observe(viewLifecycleOwner, Observer {
             routinesEmptyListWidget.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             routinesRecyclerView.visibility = if (it.isEmpty().not()) View.VISIBLE else View.GONE
@@ -88,6 +103,14 @@ class CreatePlanFragment : Fragment() {
         viewModel.dateRangeAsString.observe(
             viewLifecycleOwner,
             Observer { dateValueTextView.text = it })
+
+        viewModel.planGoalOutput.observe(
+            viewLifecycleOwner,
+            Observer { planGoalEditText.setText(it) })
+
+        viewModel.planNameOutput.observe(
+            viewLifecycleOwner,
+            Observer { planNameEditText.setText(it) })
     }
 
     private fun initViews() {
@@ -101,9 +124,7 @@ class CreatePlanFragment : Fragment() {
         routinesRecyclerView.adapter = adapter
 
         addRoutineButton.setOnClickListener {
-            val action =
-                CreatePlanFragmentDirections.actionCreatePlanFragmentToCreateRoutineNavigation()
-            findNavController().navigate(action)
+            navigateToCreateRoutineFragment(null)
         }
         toolbar.setNavigationOnClickListener {
             navigateBack()
@@ -111,9 +132,23 @@ class CreatePlanFragment : Fragment() {
         toolbar.inflateMenu(R.menu.toolbar_save_menu)
         toolbar.menu.findItem(R.id.action_save).isVisible = false
         toolbar.setOnMenuItemClickListener {
-            viewModel.savePlan(args.userId)
+            val planIdentifier = args.planId ?: ""
+            if (planIdentifier.isNotEmpty()) {
+                viewModel.updatePlan(args.userId, planIdentifier)
+            } else {
+                viewModel.savePlan(args.userId)
+            }
             true
         }
+    }
+
+    private fun navigateToCreateRoutineFragment(routine: Routine?, index: Int = -1) {
+        val action =
+            CreatePlanFragmentDirections.actionCreatePlanFragmentToCreateRoutineNavigation(
+                routine,
+                index
+            )
+        findNavController().navigate(action)
     }
 
     @SuppressLint("CheckResult")
@@ -121,13 +156,13 @@ class CreatePlanFragment : Fragment() {
         planNameEditText.textChanges()
             .skipInitialValue()
             .debounce(Constants.DEBOUNCE_DURATION, TimeUnit.MILLISECONDS)
-            .subscribe { viewModel.validatePlanName(it.toString()) }
+            .subscribe { viewModel.planName = it.toString() }
 
         planGoalEditText.textChanges()
             .skipInitialValue()
             .debounce(Constants.DEBOUNCE_DURATION, TimeUnit.MILLISECONDS)
             .subscribe {
-                viewModel.validatePlanGoal(it.toString())
+                viewModel.planGoal = it.toString()
             }
 
         dateContainer.clicks()

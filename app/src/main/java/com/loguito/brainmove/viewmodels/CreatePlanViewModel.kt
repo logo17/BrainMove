@@ -13,8 +13,16 @@ class CreatePlanViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
 
     private val routineList = mutableListOf<Routine>()
-    private var planName: String = ""
-    private var planGoal: String = ""
+    var planName: String = ""
+        set(value) {
+            field = value
+            validateFields()
+        }
+    var planGoal: String = ""
+        set(value) {
+            field = value
+            validateFields()
+        }
     private var fromDate: Date? = null
     private var toDate: Date? = null
 
@@ -23,6 +31,8 @@ class CreatePlanViewModel : ViewModel() {
     private var _savePlanResponse = MutableLiveData<Boolean>()
     private var _loadingVisibility = MutableLiveData<Boolean>()
     private var _dateRangeAsString = MutableLiveData<String>()
+    private var _planNameInput = MutableLiveData<String>()
+    private var _planGoalInput = MutableLiveData<String>()
 
     val routines: LiveData<List<Routine>>
         get() = _routines
@@ -34,20 +44,23 @@ class CreatePlanViewModel : ViewModel() {
         get() = _loadingVisibility
     val dateRangeAsString: LiveData<String>
         get() = _dateRangeAsString
+    val planNameOutput: LiveData<String>
+        get() = _planNameInput
+    val planGoalOutput: LiveData<String>
+        get() = _planGoalInput
 
-    fun addRoutineToList(routine: Routine) {
-        routineList.add(routine.copy())
+    fun addRoutineToList(index: Int, routine: Routine) {
+        if (index != -1) {
+            routineList[index] = routine.copy()
+        } else {
+            routineList.add(routine.copy())
+        }
         _routines.postValue(routineList)
     }
 
-    fun validatePlanName(name: String) {
-        planName = name
-        validateFields()
-    }
-
-    fun validatePlanGoal(goal: String) {
-        planGoal = goal
-        validateFields()
+    fun addRoutinesToList(routines: List<Routine>) {
+        routineList.addAll(routines)
+        _routines.postValue(routineList)
     }
 
     fun validateDates(fromDate: Date?, toDate: Date?) {
@@ -69,6 +82,23 @@ class CreatePlanViewModel : ViewModel() {
         _areValidFields.postValue(planName.isNotEmpty() && planGoal.isNotEmpty() && fromDate != null && toDate != null && routineList.isNotEmpty())
     }
 
+    fun updatePlan(userId: String, planId: String) {
+        _loadingVisibility.postValue(true)
+        db.collection("plan").document(planId)
+            .set(Plan(
+                userId,
+                planName,
+                planGoal,
+                toDate ?: Date(),
+                fromDate ?: Date(),
+                routineList
+            ))
+            .addOnCompleteListener {
+                _loadingVisibility.postValue(false)
+                _savePlanResponse.postValue(it.isSuccessful)
+            }
+    }
+
     fun savePlan(userId: String) {
         _loadingVisibility.postValue(true)
         db.collection("plan")
@@ -86,5 +116,13 @@ class CreatePlanViewModel : ViewModel() {
                 _loadingVisibility.postValue(false)
                 _savePlanResponse.postValue(it.isSuccessful)
             }
+    }
+
+    fun setPlanNameInput(name: String) {
+        _planNameInput.postValue(name)
+    }
+
+    fun setPlanGoalInput(goal: String) {
+        _planGoalInput.postValue(goal)
     }
 }

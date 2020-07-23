@@ -9,17 +9,26 @@
         android:name="com.loguito.brainmove.fragments.CreateRoutineFragment"
         tools:layout="@layout/fragment_create_routine"
         android:label="CreateRoutineFragment">
+        <argument
+            android:name="routine"
+            app:argType="com.loguito.brainmove.models.remote.Routine"
+            app:nullable="true" />
+        <argument
+            android:name="routineIndex"
+            app:argType="integer"
+            android:defaultValue="-1" />
         <action
-            android:id="@+id/action_createRoutineFragment_to_createBlockFragment"
-            app:destination="@id/createBlockFragment"
-            app:enterAnim="@anim/slide_left"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right" />
+            android:id="@+id/action_createRoutineFragment_to_create_exercise_navigation"
+            app:destination="@id/create_exercise_navigation">
+            <argument
+                android:name="routineIndex"
+                app:argType="integer"
+                android:defaultValue="-1" />
+            <argument
+                android:name="block"
+                app:argType="com.loguito.brainmove.models.remote.Block"
+                app:nullable="true"/>
+        </action>
     </fragment>
-    <fragment
-        android:id="@+id/createBlockFragment"
-        android:name="com.loguito.brainmove.fragments.CreateBlockFragment"
-        tools:layout="@layout/fragment_create_block"
-        android:label="CreateBlockFragment" />
+    <include app:graph="@navigation/create_exercise_navigation" />
 </navigation>

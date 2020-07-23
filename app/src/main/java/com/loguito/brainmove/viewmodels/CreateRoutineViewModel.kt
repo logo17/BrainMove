@@ -8,34 +8,50 @@ import com.loguito.brainmove.models.remote.Routine
 
 class CreateRoutineViewModel : ViewModel() {
     private val blockList = mutableListOf<Block>()
-    private var routineName: String = ""
-    private var routineNumber: Int = 0
+    var routineName: String = ""
+        set(value) {
+            field = value
+            validateFields()
+        }
+
+    var routineNumber: Int = 0
+        set(value) {
+            field = value
+            validateFields()
+        }
+
+    var listIndex = -1
 
     private var _areValidFields = MutableLiveData<Boolean>()
     private var _blocks = MutableLiveData<List<Block>>()
-    private var _routine = MutableLiveData<Routine>()
+    private var _routine = MutableLiveData<Pair<Int, Routine>>()
+    private var _routineNameInput = MutableLiveData<String>()
+    private var _routineNumberInput = MutableLiveData<Int>()
 
     val blocks: LiveData<List<Block>>
         get() = _blocks
 
     val areValidFields: LiveData<Boolean>
         get() = _areValidFields
-    val routine: LiveData<Routine>
+    val routine: LiveData<Pair<Int, Routine>>
         get() = _routine
+    val routineNameOutput: LiveData<String>
+        get() = _routineNameInput
+    val routineNumberOutput: LiveData<Int>
+        get() = _routineNumberInput
 
-    fun addBlockToList(block: Block) {
-        blockList.add(block.copy())
+    fun addBlockToList(index: Int, block: Block) {
+        if (index != -1) {
+            blockList[index] = block.copy()
+        } else {
+            blockList.add(block.copy())
+        }
         _blocks.postValue(blockList)
     }
 
-    fun validateRoutineName(name: String) {
-        routineName = name
-        validateFields()
-    }
-
-    fun validateRoutineNumber(number: Int) {
-        routineNumber = number
-        validateFields()
+    fun addBlocksToList(blocks: List<Block>) {
+        blockList.addAll(blocks)
+        _blocks.postValue(blockList)
     }
 
     private fun validateFields() {
@@ -44,11 +60,22 @@ class CreateRoutineViewModel : ViewModel() {
 
     fun createRoutineObject() {
         _routine.postValue(
-            Routine(
-                routineName,
-                routineNumber,
-                blockList.toMutableList()
+            Pair(
+                listIndex,
+                Routine(
+                    routineName,
+                    routineNumber,
+                    blockList.toMutableList()
+                )
             )
         )
+    }
+
+    fun setRoutineNameInput(name: String) {
+        _routineNameInput.postValue(name)
+    }
+
+    fun setRoutineNumberInput(routineNumber: Int) {
+        _routineNumberInput.postValue(routineNumber)
     }
 }
